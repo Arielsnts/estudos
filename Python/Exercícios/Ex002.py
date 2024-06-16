@@ -1,0 +1,8 @@
+c = str(input('Digite seu nome: ')).strip().upper()
+n = c.split()
+print(f'Seu primeiro nome é {n[0]} e seu último nome é {n[-1]}')
+print(f'A letra A aparece {c.count('A')+(c.count('Ã')+c.count('Á')+c.count('À'))} vezes')
+print(f'A primeira letra A aparece na posição {c.find('A')+1}')
+print(f'A última letra A aparece na posição {c.rfind('A')+1}')
+print(f'Essa é a quantidade de posições: {len(c)}')
+print(f'Essa é a quantidade de letras: {len(c) - c.count(' ')}')
