@@ -34,3 +34,11 @@ section#iphone {
     width: 260px;
     height: 527px;
 }
+
+iframe#tela {
+    position: relative;
+    top: 68px;
+    left: 18px;
+    height: 395px;
+    width: 225px;
+}
