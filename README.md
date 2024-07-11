@@ -8,8 +8,8 @@ Acesse meus projetos de HTML e CSS por esses links:
 
 Android:
 
-    https://arielsnts.github.io/Estudos/html-css/Projetos/ANDROID/
+    https://arielsnts.github.io/Estudos/html-css/projetos/android/
 
 Cordel:
 
-    https://arielsnts.github.io/Estudos/html-css/Projetos/Cordel/
+    https://arielsnts.github.io/Estudos/html-css/projetos/cordel/
