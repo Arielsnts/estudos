@@ -6,8 +6,9 @@
     <title>Menu Responsivo</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/mediaquery.css">
 </head>
-<body>
+<body onresize="mudouTamanho()">
     <header>
         <h1>Meu site</h1>
         <span id="icon" class="material-symbols-outlined" onclick="clickMenu()">menu</span>
@@ -39,6 +40,14 @@
     </main>
     
     <script>
+        function mudouTamanho() {
+            if (window.innerWidth >= 768) {
+                item.style.display = 'block'
+            } else {
+                item.style.display = 'none'
+            }
+        }
+
         function clickMenu() {
             if (item.style.display == 'block') {
                 item.style.display = 'none' 
