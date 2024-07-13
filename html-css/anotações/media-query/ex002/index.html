@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Responsivo</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <header>
+        <h1>Meu site</h1>
+        <span id="icon" class="material-symbols-outlined" onclick="clickMenu()">menu</span>
+        <menu id="item">
+            <ul>
+                <li><a href="#">Opção 1</a></li>
+                <li><a href="#">Opção 2</a></li>
+                <li><a href="#">Opção 3</a></li>
+                <li><a href="#">Opção 4</a></li>
+                <li><a href="#">Opção 5</a></li>
+            </ul>
+        </menu>
+    </header>
+    <main>
+        <article>
+            <h2>Teste de media query</h2>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis, facilis maiores distinctio repudiandae unde numquam corrupti? Fugiat sit reiciendis possimus nemo molestias odio, exercitationem neque obcaecati optio commodi voluptatum praesentium?
+            Voluptate, numquam! Corrupti velit ipsam consectetur fugiat, necessitatibus, excepturi dolorum veniam, corporis cum ducimus officia. Doloribus cumque consequatur cum natus doloremque incidunt amet explicabo, aliquid facere odio praesentium expedita ea.
+            Veritatis fuga perspiciatis quo doloribus rem dolorum facere molestias ipsum, distinctio, tenetur, placeat atque recusandae iste? Saepe itaque cum pariatur eius nobis laborum quas reprehenderit! Provident excepturi numquam placeat sequi!</p>
+
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis, facilis maiores distinctio repudiandae unde numquam corrupti? Fugiat sit reiciendis possimus nemo molestias odio, exercitationem neque obcaecati optio commodi voluptatum praesentium?
+            Voluptate, numquam! Corrupti velit ipsam consectetur fugiat, necessitatibus, excepturi dolorum veniam, corporis cum ducimus officia. Doloribus cumque consequatur cum natus doloremque incidunt amet explicabo, aliquid facere odio praesentium expedita ea.
+            Veritatis fuga perspiciatis quo doloribus rem dolorum facere molestias ipsum, distinctio, tenetur, placeat atque recusandae iste? Saepe itaque cum pariatur eius nobis laborum quas reprehenderit! Provident excepturi numquam placeat sequi!</p>
+
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reiciendis, facilis maiores distinctio repudiandae unde numquam corrupti? Fugiat sit reiciendis possimus nemo molestias odio, exercitationem neque obcaecati optio commodi voluptatum praesentium?
+            Voluptate, numquam! Corrupti velit ipsam consectetur fugiat, necessitatibus, excepturi dolorum veniam, corporis cum ducimus officia. Doloribus cumque consequatur cum natus doloremque incidunt amet explicabo, aliquid facere odio praesentium expedita ea.
+            Veritatis fuga perspiciatis quo doloribus rem dolorum facere molestias ipsum, distinctio, tenetur, placeat atque recusandae iste? Saepe itaque cum pariatur eius nobis laborum quas reprehenderit! Provident excepturi numquam placeat sequi!</p>
+        </article>
+    </main>
+    
+    <script>
+        function clickMenu() {
+            if (item.style.display == 'block') {
+                item.style.display = 'none' 
+            } else {
+                item.style.display = 'block'
+            }
+        }
+    </script>
+</body>
+</html>
