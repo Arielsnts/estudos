@@ -23,7 +23,7 @@ body {
 
 #login {
     background-color: white;
-    height: 550px;
+    height: 500px;
     width: 300px;
     border-radius: 20px;
     overflow: hidden;
@@ -49,3 +49,74 @@ body {
     display: block;
     padding: 10px;
 }
+
+#form > p {
+    padding: 5px;
+    text-align: center;
+}
+
+#form > h1 {
+    text-align: center;
+}
+
+.campo {
+    background-color: #BED996;
+    border-radius: 5px;
+    height: 40px;
+    margin: 5px 0;
+}
+
+.campo > label {
+    display: none;
+}
+
+.campo > span {
+    font-size: 2em;
+    width: 40px;
+    padding: 5px;
+}
+
+.campo > input {
+    height: 100%;
+    border-radius: 5px;
+    border: solid 2px #BED996;
+    width: calc(100% - 44px);
+    text-indent: 5px;
+    transform: translateY(-12px);
+}
+
+form > input[type=submit] {
+    display: block;
+    font-size: 1em;
+    width: 100%;
+    height: 40px;
+    background-color: #29A632;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 0 5px 0;
+    transform: translate(-1px,0);
+}
+
+form > input[type=submit]:hover {
+    background-color: #185e1d;
+    color: white;
+}
+
+form > .botao {
+    display: block;
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: white;
+    border: 2px solid #BED996;
+    color: black;
+    padding-top: 10px;
+}
+
+form > .botao:hover {
+    background-color: #BED996;
+    border: 2px solid #BED996;
+} 
