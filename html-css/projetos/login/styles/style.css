@@ -28,6 +28,8 @@ body {
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.397);
+    transition: width .3s, heigth .3s;
+    transition-timing-function: ease;
     
     position: absolute;
     top: 50%;
@@ -39,7 +41,7 @@ body {
     display: block;
     background: #BED996 url(../image/futebol.jpg) center center no-repeat;
     background-size: cover;
-    height: 150px;
+    height: 200px;
     border-radius: 20px 20px 0 0;
 }
 
