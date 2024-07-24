@@ -1,6 +1,5 @@
-function aleatorio(min, max) {
-    const fator = max - min + 1
-    return parseInt(Math.random() * fator) + min
+function f(x) {
+    return x ** 2
 }
 
-console.log(aleatorio(5, 10))
+console.log(f(4))
