@@ -18,4 +18,5 @@ const situacao = (carga, faltas, media) => {
   } else return "aprovado"
 }
 
-console.log(situacao(4, 2, media((n1, n2, n3, p1, p2, p3) => (n1*p1 + n2*p2 + n3*p3) / (p1+ p2+ p3) , 4, 5, 6, 1, 1, 1)))
+console.log(situacao(4, 2, media((n1, n2, n3, p1, p2, p3) =>
+   (n1*p1 + n2*p2 + n3*p3) / (p1+ p2+ p3) , 4, 5, 6, 2, 1, 1)))

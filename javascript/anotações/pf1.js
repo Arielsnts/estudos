@@ -1,2 +1,3 @@
-const exec = (f, x, y) => f(x,y)
-console.log(exec((x, y) => x + y, 5, 7))
+const executar = (f, x, y, z) => f(x, y, z)
+
+console.log(executar((x, y) => x*y**2, 3.14, 5))
