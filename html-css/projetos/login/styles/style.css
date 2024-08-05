@@ -82,7 +82,7 @@ body {
     border: solid 2px #BED996;
     width: calc(100% - 44px);
     text-indent: 5px;
-    transform: translateY(-12px);
+    transform: translate(44px, -42px);
 }
 
 form > input[type=submit] {
