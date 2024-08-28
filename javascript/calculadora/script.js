@@ -86,7 +86,7 @@ function multiplicacao() {
     if (visor.textContent.length === 0 || visor.textContent === "Digite um número") {
         visor.innerHTML = "Digite um número";
     } else {
-        visor.innerHTML += " * ";
+        visor.innerHTML += "*";
     }
 }
 
