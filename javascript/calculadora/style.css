@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+:root {
+    --cor1: #F57E00;
+    --cor2: #EB221E;
+    --cor3: #455559;
+    --cor4: #2F3D40;
+    --cor5: #3D5A73;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #2F3D40;
+}
+
+section {
+    background-color: #455559;
+    border-radius: 20px;
+    width: 285px;
+    padding: 5px;
+    margin: auto;
+}
+
+#visor {
+    display: inline-block;
+    height: 43px;
+    width: 265px;
+    margin: 5px;
+    border-radius: 10px;
+    background-color: #2F3D40;
+    padding: 0 7px 0 7px;
+    transform: translateX(-2px);
+
+    color: #8dacb4;
+    text-align: right;
+    font-size: 2em;
+}
+
+#botoes {
+    background-color: #3D5A73;
+    width: 265px;
+    margin: 5px;
+    border-radius: 10px;
+    padding: 0 7px 0 7px;
+    transform: translateX(-2px);
+}
+
+
+
+ul {
+    display: inline-block;
+    padding: 0;
+    margin: 6px;
+}
+
+li {
+    list-style-type: none;
+    height: 50px;
+    width: 50px;
+    background-color: #2F3D40;
+    padding: 0;
+    border-radius: 50%;
+    font-weight: bolder;
+    font-size: 1.5em;
+    margin-top: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+li:hover {
+    background-color: #455559;
+}
+
+#apagar {
+    color: #d8413e;
+}
+
+.laranja {
+    color: #F57E00;
+}
+
+.branco{
+    color: white;
+}
+
+#igual {
+    background-color: #F57E00;
+    color: white;
+}
+
+#igual:hover {
+    background-color: #dda467;
+}
