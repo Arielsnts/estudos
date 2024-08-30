@@ -18,7 +18,6 @@ const dolar = (registro) => ({...registro,
 const desconto20 = (registro) => ({...registro,
     preco: parseFloat(registro.preco * 0.8).toFixed(2)
 })
-
 const letraC = (registro) => registro.nome[0] == "c"
 
 // letra a
