@@ -8,11 +8,18 @@ const carrinho = [
 
 const parcial = (registro) => registro.qtde * registro.preco
 const soma = (acc, x) => acc + x
-const fragil = (registro) => registro.fragil
-const dolar = (registro) => registro.preco / 5.65
-const desconto20 = (registro) => registro.preco * 0.8
-const letraC = (registro) => registro.nome[0] == "c"
+
 const qtde = (registro) => registro.qtde
+const fragil = (registro) => registro.fragil
+
+const dolar = (registro) => ({...registro,
+    preco: parseFloat(registro.preco / 5.65).toFixed(2)
+})
+const desconto20 = (registro) => ({...registro,
+    preco: parseFloat(registro.preco * 0.8).toFixed(2)
+})
+
+const letraC = (registro) => registro.nome[0] == "c"
 
 // letra a
 console.log(carrinho.map(dolar))
@@ -23,4 +30,4 @@ console.log(carrinho.map(desconto20))
 // letra e
 console.log(carrinho.filter(letraC).map(parcial).reduce(soma, 0))
 // letra f
-console.log(carrinho.filter(fragil).map(parcial).reduce(soma, 0) / carrinho.filter(fragil).map(qtde).reduce(soma,0))
+console.log(parseFloat(carrinho.filter(fragil).map(parcial).reduce(soma, 0) / carrinho.filter(fragil).map(qtde).reduce(soma,0)).toFixed(2))
