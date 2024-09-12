@@ -9,24 +9,25 @@ const carrinho = [
 const parcial = (registro) => registro.qtde * registro.preco
 const soma = (acc, x) => acc + x
 
-const qtde = (registro) => registro.qtde
-const fragil = (registro) => registro.fragil
+const dolar = (registro) => (registro.preco / 5.64).toFixed(2)
 
-const dolar = (registro) => ({...registro,
-    preco: parseFloat(registro.preco / 5.65).toFixed(2)
-})
-const desconto20 = (registro) => ({...registro,
-    preco: parseFloat(registro.preco * 0.8).toFixed(2)
-})
+const desconto20 = (registro) => (registro.preco * 0.80).toFixed(2)
+
+const frageis = (registro) => registro.fragil
+
 const letraC = (registro) => registro.nome[0] == "c"
+
+const qtde = (registro) => registro.qtde
 
 // letra a
 console.log(carrinho.map(dolar))
-// letras b e d
-console.log(carrinho.filter(fragil).map(parcial).reduce(soma, 0))
+// letra b
+console.log(carrinho.map(parcial).reduce(soma, 0))
 // letra c
 console.log(carrinho.map(desconto20))
+// letra d
+console.log(carrinho.filter(frageis).map(parcial).reduce(soma, 0))
 // letra e
 console.log(carrinho.filter(letraC).map(parcial).reduce(soma, 0))
 // letra f
-console.log(parseFloat(carrinho.filter(fragil).map(parcial).reduce(soma, 0) / carrinho.filter(fragil).map(qtde).reduce(soma,0)).toFixed(2))
+console.log(carrinho.filter(frageis).map(parcial).reduce(soma, 0) / carrinho.filter(frageis).map(qtde).reduce(soma, 0))
