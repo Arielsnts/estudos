@@ -14,6 +14,11 @@
 
 body {
     background-color: #2F3D40;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    margin: 0; 
 }
 
 section {
