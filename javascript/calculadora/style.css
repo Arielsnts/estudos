@@ -22,6 +22,10 @@ section {
     width: 285px;
     padding: 5px;
     margin: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #visor {
@@ -33,10 +37,6 @@ section {
     background-color: #2F3D40;
     padding: 0 7px 0 7px;
     transform: translateX(-2px);
-
-    color: #8dacb4;
-    text-align: right;
-    font-size: 1.9em;
 }
 
 #botoes {
