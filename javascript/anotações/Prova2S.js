@@ -11,3 +11,5 @@ const inputStr = "O imc de Fred é 25.3. O imc de Maria é 20.2. O imc de Ana é
 const pacientesProcessados = processarStringPacientes(inputStr) // lista dos pacientes processados
 
 console.log(pacientesProcessados)
+
+console.log("hello world")
