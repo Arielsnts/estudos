@@ -12,4 +12,3 @@ const pacientesProcessados = processarStringPacientes(inputStr) // lista dos pac
 
 console.log(pacientesProcessados)
 
-console.log("hello world")
