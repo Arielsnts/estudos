@@ -31,3 +31,5 @@ console.log(carrinho.filter(frageis).map(parcial).reduce(soma, 0))
 console.log(carrinho.filter(letraC).map(parcial).reduce(soma, 0))
 // letra f
 console.log(carrinho.filter(frageis).map(parcial).reduce(soma, 0) / carrinho.filter(frageis).map(qtde).reduce(soma, 0))
+
+console.log(carrinho.map(qtde))
