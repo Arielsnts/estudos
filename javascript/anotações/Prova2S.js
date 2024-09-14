@@ -38,8 +38,8 @@ const classificarPacientes = (input) => {
         : paciente.imc < 29.9 
         ? 'Sobrepeso'
         : 'Obesidade'
-    }));
-  };
+    }))
+}
 
 // questão 1
 console.log(pacientesProcessados)
