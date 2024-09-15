@@ -1,8 +1,9 @@
-const lista1 = Object.freeze([1, 2, 3, 4, 5])
-const lista2 = Object.freeze(['banana', 'maçã', 'laranja', 'abacaxi'])
-const lista3 = Object.freeze([10, 5, 8, 3, 7])
-const lista4 = Object.freeze(['sol', 'elefante', 'carro', 'mar'])
-const lista5 = Object.freeze([10, 20, 30, 40])
+const inputLista = "banana, maçã, laranja, abacaxi"
+const inputLista2 = "1,2,3,4,5,6,7,8,9,10"
+
+function processarString(string) {
+    return string.split(/,\s*/)
+}
 
 const imparPar = (lista) => {
     const listaA = [...lista]
@@ -42,5 +43,10 @@ const mediaEsoma = (lista) => {
     const media = soma / listaA.length
     return {soma, media}
 }
+
+const strings = processarString(inputLista)
+const numeros = processarString(inputLista2)
+
 // testes
-console.log(imparPar(lista1))
+console.log(imparPar(numeros))
+console.log(comprimentoPalavras(strings))
