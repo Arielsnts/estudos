@@ -14,8 +14,7 @@ function ordenarPacientePorIMC(lista) {
 }
 
 function maiorEmenorPacientes(lista) {
-    const copia = [...lista]
-    const ordem = ordenarPacientePorIMC(copia)
+    const ordem = ordenarPacientePorIMC(lista)
     return {menor: ordem[0].nome, maior: ordem[ordem.length - 1].nome}
 }
 
