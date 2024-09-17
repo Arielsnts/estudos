@@ -32,10 +32,10 @@ function classificarPacientes(lista) {
 }
 
 function calcularMediaIMC(lista) {
-    const copia = [...lista]
-    return parseFloat((copia.reduce((acc, x) => acc + x.imc, 0) / copia.length).toFixed(1))
+    return parseFloat((lista.reduce((acc, x) => acc + x.imc, 0) / lista.length).toFixed(1))
 }
 
 const pacientesProcessados = Object.freeze(processarPacientes(inputStr))
 
+console.log(calcularMediaIMC(pacientesProcessados))
 console.log(pacientesProcessados)
