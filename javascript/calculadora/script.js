@@ -4,122 +4,60 @@ function apagar() {
     visor.innerHTML = ""
 }
 
-function zero() {
-    if (visor.textContent === "Digite um número" || visor.textContent === "Infinito" || visor.textContent === "Indeterminado" || visor.textContent === "Erro") {
+function limparErro() {
+    if (visor.textContent === "Digite um número" ||
+        visor.textContent === "Infinito" ||
+        visor.textContent === "Indeterminado" ||
+        visor.textContent === "Erro") {
         visor.innerHTML = ""
     }
-    visor.innerHTML += "0"
 }
 
-function um() {
-    if (visor.textContent === "Digite um número" || visor.textContent === "Infinito" || visor.textContent === "Indeterminado" || visor.textContent === "Erro") {
-        visor.innerHTML = ""
-    }
-    visor.innerHTML += "1"
-}
+function addNumero(numero) {
+    limparErro()
+    visor.innerHTML += numero
+} 
 
-function dois() {
-    if (visor.textContent === "Digite um número" || visor.textContent === "Infinito" || visor.textContent === "Indeterminado" || visor.textContent === "Erro") {
-        visor.innerHTML = ""
-    }
-    visor.innerHTML += "2"
-}
+function zero() {addNumero("0")}
+function um() {addNumero("1")}
+function dois() {addNumero("2")}
+function tres() {addNumero("3")}
+function quatro() {addNumero("4")}
+function cinco() {addNumero("5")}
+function seis() {addNumero("6")}
+function sete() {addNumero("7")}
+function oito() {addNumero("8")}
+function nove() {addNumero("9")}
 
-function tres() {
-    if (visor.textContent === "Digite um número" || visor.textContent === "Infinito" || visor.textContent === "Indeterminado" || visor.textContent === "Erro") {
-        visor.innerHTML = ""
-    }
-    visor.innerHTML += "3"
-}
-
-function quatro() {
-    if (visor.textContent === "Digite um número" || visor.textContent === "Infinito" || visor.textContent === "Indeterminado" || visor.textContent === "Erro") {
-        visor.innerHTML = ""
-    }
-    visor.innerHTML += "4"
-}
-
-function cinco() {
-    if (visor.textContent === "Digite um número" || visor.textContent === "Infinito" || visor.textContent === "Indeterminado" || visor.textContent === "Erro") {
-        visor.innerHTML = ""
-    }
-    visor.innerHTML += "5"
-}
-
-function seis() {
-    if (visor.textContent === "Digite um número" || visor.textContent === "Infinito" || visor.textContent === "Indeterminado" || visor.textContent === "Erro") {
-        visor.innerHTML = ""
-    }
-    visor.innerHTML += "6"
-}
-
-function sete() {
-    if (visor.textContent === "Digite um número" || visor.textContent === "Infinito" || visor.textContent === "Indeterminado" || visor.textContent === "Erro") {
-        visor.innerHTML = ""
-    }
-    visor.innerHTML += "7"
-}
-
-function oito() {
-    if (visor.textContent === "Digite um número" || visor.textContent === "Infinito" || visor.textContent === "Indeterminado" || visor.textContent === "Erro") {
-        visor.innerHTML = ""
-    }
-    visor.innerHTML += "8"
-}
-
-function nove() {
-    if (visor.textContent === "Digite um número" || visor.textContent === "Infinito" || visor.textContent === "Indeterminado" || visor.textContent === "Erro") {
-        visor.innerHTML = ""
-    }
-    visor.innerHTML += "9"
-}
-
-function divisao() {
-    if (visor.textContent.length === 0 || visor.textContent === "Digite um número") {
+function addOperacao(operação) {
+    if (visor.textContent.length === 0 ||
+        visor.textContent === "Digite um número") {
         visor.innerHTML = "Digite um número";
-    } else {
-        visor.innerHTML += " / ";
+    }
+    else {
+        visor.innerHTML += operação
     }
 }
 
-function multiplicacao() {
-    if (visor.textContent.length === 0 || visor.textContent === "Digite um número") {
-        visor.innerHTML = "Digite um número";
-    } else {
-        visor.innerHTML += "*";
-    }
-}
+function divisao() {addOperacao("/")}
+function multiplicacao() {addOperacao("*")}
+function mais() {addOperacao("+")}
+function menos() {addOperacao("-")}
 
-function mais() {
-    if (visor.textContent.length === 0 || visor.textContent === "Digite um número") {
-        visor.innerHTML = "Digite um número";
-    } else {
-        visor.innerHTML += " + ";
-    }
-}
 
-function menos() {
-    if (visor.textContent.length === 0 || visor.textContent === "Digite um número") {
-        visor.innerHTML = "Digite um número";
+function ponto() {
+    const ultimoNumero = visor.textContent.split(/[\+\-\*\/\(]/).pop()
+    
+    if (visor.textContent.length === 0 ||
+        visor.textContent === "Digite um número" ||
+        ultimoNumero.includes(".")) {
+        visor.textContent = "Digite um número"
     } else {
-        visor.innerHTML += " - ";
+        visor.innerHTML += "."
     }
 }
 
 // Daqui pra frente usei chatGPT pq não sabia fazer ainda
-
-function ponto() {
-    let conteudoVisor = visor.textContent.trim();
-    let ultimoNumero = conteudoVisor.split(/[\+\-\*\/\(\s]/).pop(); // Extrai o último número
-
-    if (conteudoVisor.length === 0 || 
-        conteudoVisor === "Digite um número" || 
-        ultimoNumero.includes(".")) {
-        visor.innerHTML = "Digite um número";
-    } else {
-        visor.innerHTML += ".";
-    }
-}
 
 function porcentagem() {
     let conteudoVisor = visor.textContent.trim();
