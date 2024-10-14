@@ -1,5 +1,4 @@
-const lista = [1, 2, 3, 4, 5]
-
+// recursividade
 const indef = (x) => typeof x == "undefined"
 
 const ordemSequencia = (num) => {
@@ -41,7 +40,7 @@ const quociente = (n, m) => {
 const mdc = (n, m) => {
     if (m == 0) return n
     if (n < m) return mdc(m, n)
-    else return mdc(n - m, m)
+        else return mdc(n - m, m)
 }
 
 const tamanho = (string) => {
@@ -49,7 +48,17 @@ const tamanho = (string) => {
     else return 1 + tamanho(string.slice(1))
 }
 
-const soma = ([head, ...tail]) => indef(head) ? 0 : (head + soma(tail))
+// recursidade com listas
+const lista = [1, 2, 3, 4, 5]
+
+const soma = ([head, ...tail]) => {
+    const helper = ([head, ...tail]) => {
+        if (indef(head)) return 0
+        else return head + helper(tail)
+    }
+    if (indef(head)) return "vazia"
+    else return helper([head, ...tail])
+}
 
 const inverte = ([head, ...tail]) => {
     if (indef(head)) return []
@@ -61,5 +70,26 @@ const len = ([head, ...tail]) => {
     else return 1 + len(tail)
 }
 
+const busca = ([head, ...tail], num, acc=0) => {
+    if (indef(head)) return -1
+    else if (num == head) return acc
+    else return busca(tail, num, acc+1)
+}
+
+const vogais = (str) => {
+    const helper = ([head, ...tail]) => {
+        if (indef(head)) return 0
+        else if (/[aeiouãõéíê]/.test(head)) return 1 + helper(tail)
+        else return helper(tail)
+    }
+    if (str == "") return 0
+    else return helper(str.split)
+}
+
+const meuMap = (f, [x, ...xs]) => {
+    if (indef(x)) return []
+    else return [f(x), ...meuMap(f, xs)]
+}
+
 // Testes 
-console.log(len(lista))
+console.log(vogais("ariel"))
