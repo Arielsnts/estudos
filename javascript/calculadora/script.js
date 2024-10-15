@@ -14,8 +14,7 @@ function verificaErro() {
 
 function addNumero(numero) {
     if (verificaErro()) {
-        visor.innerHTML = ""
-        visor.innerHTML += numero
+        visor.textContent = numero
     } else return visor.textContent += numero
 } 
 
@@ -31,8 +30,7 @@ function oito() {addNumero("8")}
 function nove() {addNumero("9")}
 
 function addOperacao(operação) {
-    if (visor.textContent.length === 0 ||
-        verificaErro()) {
+    if (visor.textContent.length === 0 || verificaErro()) {
         visor.textContent = "Digite um número";
     }
     else {
@@ -49,8 +47,7 @@ function menos() {addOperacao("-")}
 function ponto() {
     const ultimoNumero = visor.textContent.split(/[\+\-\*\/\(]/).pop()
     
-    if (visor.textContent.length === 0 ||
-        verificaErro() ||
+    if (visor.textContent.length === 0 ||  verificaErro() ||
         ultimoNumero.includes(".")) {
         visor.textContent = "Digite um número"
     } else {
@@ -59,8 +56,7 @@ function ponto() {
 }
 
 function porcentagem() {
-    if (visor.textContent.length === 0 ||
-        verificaErro()) {
+    if (visor.textContent.length === 0 || verificaErro()) {
         visor.textContent = "Digite um número"
         return
     }
@@ -75,8 +71,7 @@ function porcentagem() {
 }
 
 function maismenos() {
-    if (visor.textContent.length === 0 ||
-        verificaErro()) {
+    if (visor.textContent.length === 0 || verificaErro()) {
         visor.textContent = "Digite um número"
         return
     }
@@ -90,21 +85,18 @@ function maismenos() {
     // Pode ocorrer um erro de substituição caso a função tente substituir um número com mais de uma ocorrência.
 }
 
-// Daqui pra frente usei chatGPT pq não sabia fazer ainda
 let abrirParenteses = 0; 
 
 function parenteses() {
-    let visorTexto = visor.textContent.trim();
-
-    if (visorTexto === "" || visorTexto === "Digite um número") {
-        visor.innerHTML = "(";
-        abrirParenteses = 1;
-    } else if (abrirParenteses > 0 && /[\d\)]$/.test(visorTexto)) {
-        visor.innerHTML += ")";
-        abrirParenteses = 0;
+    if (visor.textContent.length === 0 || verificaErro()) {
+        visor.textContent = "("
+        abrirParenteses = 1
+    } else if (abrirParenteses > 0 && /[\d\)]$/.test(visor.textContent)) {
+        visor.textContent += ")"
+        abrirParenteses = 0
     } else {
-        visor.innerHTML += "(";
-        abrirParenteses++;
+        visor.textContent += "("
+        abrirParenteses++
     }
 }
 
