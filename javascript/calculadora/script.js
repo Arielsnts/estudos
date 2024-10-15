@@ -43,7 +43,6 @@ function multiplicacao() {addOperacao("*")}
 function mais() {addOperacao("+")}
 function menos() {addOperacao("-")}
 
-
 function ponto() {
     const ultimoNumero = visor.textContent.split(/[\+\-\*\/\(]/).pop()
     
