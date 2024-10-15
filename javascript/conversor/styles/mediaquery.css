@@ -1,0 +1,18 @@
+/* Media query para telas entre 680px e 900px */
+@media screen and (min-width: 680px) and (max-width: 900px) {
+    #conversor {
+        width: 350px;
+    }
+}
+
+/* Media query para telas menores (até 679px) */
+@media screen and (max-width: 679px) {
+    #principal {
+        flex-direction: column; /* Coloca as seções uma em cima da outra */
+        align-items: center; /* Centraliza as seções */
+    }
+
+    #conversor, #moeda {
+        width: 340px; /* Ajusta a largura para telas menores */
+    }
+}
