@@ -4,18 +4,19 @@ function apagar() {
     visor.innerHTML = ""
 }
 
-function limparErro() {
+function verificaErro() {
     if (visor.textContent === "Digite um número" ||
         visor.textContent === "Infinito" ||
         visor.textContent === "Indeterminado" ||
-        visor.textContent === "Erro") {
-        visor.innerHTML = ""
-    }
+        visor.textContent === "Erro") return true
+    else return false
 }
 
 function addNumero(numero) {
-    limparErro()
-    visor.innerHTML += numero
+    if (verificaErro()) {
+        visor.innerHTML = ""
+        visor.innerHTML += numero
+    } else return visor.textContent += numero
 } 
 
 function zero() {addNumero("0")}
@@ -31,11 +32,11 @@ function nove() {addNumero("9")}
 
 function addOperacao(operação) {
     if (visor.textContent.length === 0 ||
-        visor.textContent === "Digite um número") {
-        visor.innerHTML = "Digite um número";
+        verificaErro()) {
+        visor.textContent = "Digite um número";
     }
     else {
-        visor.innerHTML += operação
+        visor.textContent += operação
     }
 }
 
@@ -49,33 +50,47 @@ function ponto() {
     const ultimoNumero = visor.textContent.split(/[\+\-\*\/\(]/).pop()
     
     if (visor.textContent.length === 0 ||
-        visor.textContent === "Digite um número" ||
+        verificaErro() ||
         ultimoNumero.includes(".")) {
         visor.textContent = "Digite um número"
     } else {
-        visor.innerHTML += "."
+        visor.textContent += "."
     }
+}
+
+function porcentagem() {
+    if (visor.textContent.length === 0 ||
+        verificaErro()) {
+        visor.textContent = "Digite um número"
+        return
+    }
+
+    const regex = visor.textContent.match(/(\d+(\.\d+)?)(?!.*\d)/)
+
+    if (regex) {
+        const ultimoNumero = regex[0]
+        visor.textContent = visor.textContent.replace(ultimoNumero, `(${ultimoNumero} / 100)`)
+    }
+    // Pode ocorrer um erro de substituição caso a função tente substituir um número com mais de uma ocorrência.
+}
+
+function maismenos() {
+    if (visor.textContent.length === 0 ||
+        verificaErro()) {
+        visor.textContent = "Digite um número"
+        return
+    }
+
+    const regex = visor.textContent.match(/(\d+(\.\d+)?)(?!.*\d)/)
+
+    if (regex) {
+        const ultimoNumero = regex[0]
+        visor.textContent = visor.textContent.replace(ultimoNumero, `(${ultimoNumero * -1})`)
+    }
+    // Pode ocorrer um erro de substituição caso a função tente substituir um número com mais de uma ocorrência.
 }
 
 // Daqui pra frente usei chatGPT pq não sabia fazer ainda
-
-function porcentagem() {
-    let conteudoVisor = visor.textContent.trim();
-
-    if (conteudoVisor.length === 0 || conteudoVisor === "Digite um número") {
-        visor.innerHTML = "Digite um número";
-        return;
-    }
-
-    let regex = /(\d+(\.\d+)?)(?!.*\d)/;
-    let match = conteudoVisor.match(regex);
-
-    if (match) {
-        let ultimoNumero = match[1];
-        visor.innerHTML = conteudoVisor.replace(ultimoNumero, `(${ultimoNumero} / 100)`);
-    }
-}
-
 let abrirParenteses = 0; 
 
 function parenteses() {
@@ -90,24 +105,6 @@ function parenteses() {
     } else {
         visor.innerHTML += "(";
         abrirParenteses++;
-    }
-}
-
-function maismenos() {
-    let conteudoVisor = visor.textContent.trim();
-
-    if (conteudoVisor.length === 0 || conteudoVisor === "Digite um número") {
-        visor.innerHTML = "Digite um número";
-        return;
-    }
-
-    let regex = /(\d+(\.\d+)?)(?!.*\d)/;
-    let match = conteudoVisor.match(regex);
-
-    if (match) {
-        let ultimoNumero = match[1];
-        let numeroNegativo = `(${parseFloat(ultimoNumero) * -1})`;
-        visor.innerHTML = conteudoVisor.slice(0, match.index) + numeroNegativo;
     }
 }
 
