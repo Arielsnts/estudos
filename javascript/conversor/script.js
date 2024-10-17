@@ -27,20 +27,22 @@ function libra() {trocaMoeda("libra esterlina", 0.14, "&#163;")}
 function converter() {
     const resultado = document.getElementById("valor")
     const real = parseFloat(document.getElementById("real").value)
-    
+    const moeda = document.getElementById("conversor")
+
     let taxa = 0
-    if (resultado.textContent.includes(0.18)) {taxa = 0.18}
-    else if (resultado.textContent.includes(0.16)) {taxa = 0.16}
-    else if (resultado.textContent.includes(26.47)) {taxa = 26.37}
-    else if (resultado.textContent.includes(172.73)) {taxa = 172.73}
-    else if (resultado.textContent.includes(0.14)) {taxa = 0.14}
+    let codigo = 0
+    if (moeda.textContent.includes("dólar")) {taxa = 0.18; codigo = "&#36;"}
+    else if (moeda.textContent.includes("euro")) {taxa = 0.16; codigo = "&#8364;"}
+    else if (moeda.textContent.includes("iene")) {taxa = 26.47; codigo = "&#165;"}
+    else if (moeda.textContent.includes("peso argentino")) {taxa = 173.28; codigo = "&#36;"}
+    else if (moeda.textContent.includes("libra esterlina")) {taxa = 0.14; codigo = "&#163;"}
 
     if (isNaN(real) || real <= 0) {
         resultado.textContent = "Digite um número maior que zero"
     } else {
         const calculo = real * taxa
         resultado.innerHTML = `
-        <p id="valor">R<span>&#36;</span> ${real.toFixed(2)} ≈ <span>&#36;</span> ${calculo.toFixed(2)}</p>
+        <p id="valor">R<span>&#36;</span> ${real.toFixed(2)} ≈ <span>${codigo}</span> ${calculo.toFixed(2)}</p>
         `
     }
 }

@@ -2,6 +2,11 @@
 @media screen and (min-width: 680px) and (max-width: 900px) {
     #conversor {
         width: 350px;
+        height: 380px;
+    }
+
+    #botao {
+        margin-top: 10px;
     }
 }
 
@@ -12,7 +17,16 @@
         align-items: center; /* Centraliza as seções */
     }
 
-    #conversor, #moeda {
+    #conversor {
         width: 340px; /* Ajusta a largura para telas menores */
+        height: 400px;
+    }
+
+    #moeda {
+        width: 340px;
+    }
+    
+    #botao {
+        margin-top: 10px;
     }
 }
