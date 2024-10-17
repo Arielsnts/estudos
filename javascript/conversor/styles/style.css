@@ -64,11 +64,23 @@ h2 {
     text-indent: 5px;
 }
 
+#botao {
+    width: 150px;
+    height: 43px;
+    background-color: rgb(233, 233, 233);
+    border: none;
+    border-radius: 10px;
+    transform: translateY(-2px);
+    font-size: 0.8em;
+}
+
+#botao:hover {background-color: rgb(196, 196, 196);}
+
 #valor {
     margin: 0;
     padding: 0;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
 ul {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conversor de moedas</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/mediaquery.css">
 </head>
 <body>
@@ -16,6 +16,7 @@
             <div class="entrada" id="entrada">
                 <label for="real">Digite o valor em reais:<br></label>
                 <input type="number" name="real" id="real" step="any"> R<span>&#36;</span>
+                <input onclick="converter()" type="button" id="botao" value="Converter">
             </div>
 
             <div class="resultado" id="resultado">
@@ -26,14 +27,16 @@
         <section id="moeda">
             <h1>Moeda</h1>
             <ul>
-                <li><span>&#36;</span> Dólar</li>
-                <li><span>&#8364;</span> Euro</li>
-                <li><span>&#165;</span> Yen</li>
-                <li><span>&#36;</span> Peso Argentino</li>
-                <li><span>&#163;</span> Libra Esterlina</li>
+                <li onclick="dolar()"><span>&#36;</span> Dólar</li>
+                <li onclick="euro()"><span>&#8364;</span> Euro</li>
+                <li onclick="iene()"><span>&#165;</span> iene</li>
+                <li onclick="argentina()"><span>&#36;</span> Peso Argentino</li>
+                <li onclick="libra()"><span>&#163;</span> Libra Esterlina</li>
             </ul>
         </section>
     </div>
     <footer>Última atualização: 15/10/24</footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
