@@ -42,7 +42,7 @@ function converter() {
     } else {
         const calculo = real * taxa
         resultado.innerHTML = `
-        <p id="valor">R<span>&#36;</span> ${real.toFixed(2)} ≈ <span>${codigo}</span> ${calculo.toFixed(2)}</p>
+        R<span>&#36;</span> ${real.toFixed(2)} ≈ <span>${codigo}</span> ${calculo.toFixed(2)}
         `
     }
 }
