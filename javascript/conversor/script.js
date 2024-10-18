@@ -21,7 +21,7 @@ function trocaMoeda(moeda, taxa, código) {
 function dolar() {trocaMoeda("dólar", 0.18, "&#36;")}
 function euro() {trocaMoeda("euro", 0.16, "&#8364;")}
 function iene() {trocaMoeda("iene", 26.47, "&#165;")}
-function argentina() {trocaMoeda("peso argentino", 172.73, "&#36;")}
+function argentina() {trocaMoeda("peso argentino", 173.28, "&#36;")}
 function libra() {trocaMoeda("libra esterlina", 0.14, "&#163;")}
 
 function converter() {
@@ -34,8 +34,8 @@ function converter() {
     if (moeda.textContent.includes("dólar")) {taxa = 0.18; codigo = "&#36;"}
     else if (moeda.textContent.includes("euro")) {taxa = 0.16; codigo = "&#8364;"}
     else if (moeda.textContent.includes("iene")) {taxa = 26.47; codigo = "&#165;"}
-    else if (moeda.textContent.includes("peso argentino")) {taxa = 173.28; codigo = "&#36;"}
-    else if (moeda.textContent.includes("libra esterlina")) {taxa = 0.14; codigo = "&#163;"}
+    else if (moeda.textContent.includes("peso")) {taxa = 173.28; codigo = "&#36;"}
+    else if (moeda.textContent.includes("libra")) {taxa = 0.14; codigo = "&#163;"}
 
     if (isNaN(real) || real <= 0) {
         resultado.textContent = "Digite um número maior que zero"
