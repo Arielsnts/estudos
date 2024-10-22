@@ -1,20 +1,25 @@
 const conversor = document.getElementById("conversor")
+let taxa = 0.18
+let codigo = "&#36;"
 
-function trocaMoeda(moeda, taxa, código) {
+function trocaMoeda(moeda, valor, código) {
+    taxa = valor
+    codigo = código
+
     conversor.innerHTML = `
-            <h1>Conversor</h1>
-            <h2>Real para ${moeda}</h2>
+    <h1>Conversor</h1>
+    <h2>Real para ${moeda}</h2>
 
-            <div class="entrada" id="entrada">
-                <label for="real">Digite o valor em reais:<br></label>
-                <input type="number" name="real" id="real" step="any"> R<span>&#36;</span>
-                <input onclick="converter()" type="button" id="botao" value="Converter">
-            </div>
+    <div class="entrada" id="entrada">
+        <label for="real">Digite o valor em reais:<br></label>
+        <input type="number" name="real" id="real" step="any"> R<span>&#36;</span>
+        <input onclick="converter()" type="button" id="botao" value="Converter">
+    </div>
 
-            <div class="resultado" id="resultado">
-                <h2>Conversão:</h2>
-                <p id="valor">R<span>&#36;</span> 1 ≈ <span>${código}</span> ${taxa}</p>
-            </div>
+    <div class="resultado" id="resultado">
+        <h2>Conversão:</h2>
+        <p id="valor">R<span>&#36;</span> 1 ≈ <span>${código}</span> ${valor}</p>
+    </div>
     `
 }
 
@@ -27,15 +32,6 @@ function libra() {trocaMoeda("libra esterlina", 0.14, "&#163;")}
 function converter() {
     const resultado = document.getElementById("valor")
     const real = parseFloat(document.getElementById("real").value)
-    const moeda = document.getElementById("conversor")
-
-    let taxa = 0
-    let codigo = 0
-    if (moeda.textContent.includes("dólar")) {taxa = 0.18; codigo = "&#36;"}
-    else if (moeda.textContent.includes("euro")) {taxa = 0.16; codigo = "&#8364;"}
-    else if (moeda.textContent.includes("iene")) {taxa = 26.47; codigo = "&#165;"}
-    else if (moeda.textContent.includes("peso")) {taxa = 173.28; codigo = "&#36;"}
-    else if (moeda.textContent.includes("libra")) {taxa = 0.14; codigo = "&#163;"}
 
     if (isNaN(real) || real <= 0) {
         resultado.textContent = "Digite um número maior que zero"
