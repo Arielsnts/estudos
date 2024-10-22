@@ -23,12 +23,6 @@ function trocaMoeda(moeda, valor, código) {
     `
 }
 
-function dolar() {trocaMoeda("dólar", 0.18, "&#36;")}
-function euro() {trocaMoeda("euro", 0.16, "&#8364;")}
-function iene() {trocaMoeda("iene", 26.47, "&#165;")}
-function argentina() {trocaMoeda("peso argentino", 173.28, "&#36;")}
-function libra() {trocaMoeda("libra esterlina", 0.14, "&#163;")}
-
 function converter() {
     const resultado = document.getElementById("valor")
     const real = parseFloat(document.getElementById("real").value)
