@@ -2,9 +2,9 @@ const conversor = document.getElementById("conversor")
 let taxa = 0.18
 let codigo = "&#36;"
 
-function trocaMoeda(moeda, valor, código) {
+function trocaMoeda(moeda, valor, codigoMoeda) {
     taxa = valor
-    codigo = código
+    codigo = codigoMoeda
 
     conversor.innerHTML = `
     <h1>Conversor</h1>
@@ -18,7 +18,7 @@ function trocaMoeda(moeda, valor, código) {
 
     <div class="resultado" id="resultado">
         <h2>Conversão:</h2>
-        <p id="valor">R<span>&#36;</span> 1 ≈ <span>${código}</span> ${valor}</p>
+        <p id="valor">R<span>&#36;</span> 1 ≈ <span>${codigoMoeda}</span> ${valor}</p>
     </div>
     `
 }
