@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.jogo {
+    border: 1px solid black;
+    margin: 15px auto;
+    width: 1000px;
+    height: 550px;
+
+    position: relative;
+    overflow: hidden;
+}
+
+
+.retangulo {
+    width: 75px;
+    height: 125px;
+    background-color: red;
+    
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    
+    animation: RETanimation 2s infinite linear;
+}
+
+.quadrado {
+    width: 75px;
+    height: 75px;
+    background-color: black;
+    
+    position: absolute;
+    bottom: 0;
+    left: 30px;
+}
+
+.pulo {
+    animation: pulo 750ms ease-out;
+}
+
+@keyframes pulo {
+    0% {bottom: 0;}
+
+    40% {bottom: 200px;}
+
+    50% {bottom: 200px;}
+    
+    60% {bottom: 200px;}
+
+    100% {bottom: 0;}
+}
+
+@keyframes RETanimation {
+    from {
+        right: -75px;
+    }
+
+    to {
+        right: 100%;
+    }
+}
