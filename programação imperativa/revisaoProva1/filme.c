@@ -1,72 +1,69 @@
 #include <stdio.h>
 
 int main() {
-    int primeiroFilme;
 
-    int acao1 = 0, comedia1 = 0, suspense1 = 0;
-    int acao2 = 0, comedia2 = 0, suspense2 = 0;
-    int pesoAcao = 0, pesoComedia = 0, pesoSuspense = 0;
+    scanf("%*s");
 
-    scanf("Filme%d:%*s\n", &primeiroFilme);
+    char genero;
+    int nota;
+    int acao1, comedia1, suspense1;
 
-    char genero, genero1, genero2;
-    int pontuacao, pontuacao1, pontuacao2;
+    scanf(" %c%*s%*c%d", &genero, &nota);
+    if (genero == 'a') acao1 = nota;
+    else if (genero == 'c') comedia1 = nota;
+    else if (genero == 's') suspense1 = nota;
 
-    scanf(" %c%*[^:]: %d", &genero1, &pontuacao1);
-    if (genero1 == 'a') acao1 = pontuacao1;
-    else if (genero1 == 'c') comedia1 = pontuacao1;
-    else if (genero1 == 's') suspense1 = pontuacao1;
+    scanf(" %c%*s%*c%d", &genero, &nota);
+    if (genero == 'a') acao1 = nota;
+    else if (genero == 'c') comedia1 = nota;
+    else if (genero == 's') suspense1 = nota;
 
-    scanf(" %c%*[^:]: %d", &genero1, &pontuacao1);
-    if (genero1 == 'a') acao1 = pontuacao1;
-    else if (genero1 == 'c') comedia1 = pontuacao1;
-    else if (genero1 == 's') suspense1 = pontuacao1;
+    scanf(" %c%*s%*c%d", &genero, &nota);
+    if (genero == 'a') acao1 = nota;
+    else if (genero == 'c') comedia1 = nota;
+    else if (genero == 's') suspense1 = nota;
 
-    scanf(" %c%*[^:]: %d", &genero1, &pontuacao1);
-    if (genero1 == 'a') acao1 = pontuacao1;
-    else if (genero1 == 'c') comedia1 = pontuacao1;
-    else if (genero1 == 's') suspense1 = pontuacao1;
+    scanf("%*s");
 
-    int segundoFilme;
+    int acao2, comedia2, suspense2;
 
-    scanf(" Filme%d:%*s\n", &segundoFilme);
+    scanf(" %c%*s%*c%d", &genero, &nota);
+    if (genero == 'a') acao2 = nota;
+    else if (genero == 'c') comedia2 = nota;
+    else if (genero == 's') suspense2 = nota;
 
-    scanf(" %c%*[^:]: %d", &genero2, &pontuacao2);
-    if (genero2 == 'a') acao2 = pontuacao2;
-    else if (genero2 == 'c') comedia2 = pontuacao2;
-    else if (genero2 == 's') suspense2 = pontuacao2;
+    scanf(" %c%*s%*c%d", &genero, &nota);
+    if (genero == 'a') acao2 = nota;
+    else if (genero == 'c') comedia2 = nota;
+    else if (genero == 's') suspense2 = nota;
 
-    scanf(" %c%*[^:]: %d", &genero2, &pontuacao2);
-    if (genero2 == 'a') acao2 = pontuacao2;
-    else if (genero2 == 'c') comedia2 = pontuacao2;
-    else if (genero2 == 's') suspense2 = pontuacao2;
+    scanf(" %c%*s%*c%d", &genero, &nota);
+    if (genero == 'a') acao2 = nota;
+    else if (genero == 'c') comedia2 = nota;
+    else if (genero == 's') suspense2 = nota;
 
-    scanf(" %c%*[^:]: %d", &genero2, &pontuacao2);
-    if (genero2 == 'a') acao2 = pontuacao2;
-    else if (genero2 == 'c') comedia2 = pontuacao2;
-    else if (genero2 == 's') suspense2 = pontuacao2;
+    int peso1, peso2, peso3;
 
+    scanf(" %c%*s%*c%d", &genero, &nota);
+    if (genero == 'a') peso1 = nota;
+    else if (genero == 'c') peso2 = nota;
+    else if (genero == 's') peso3 = nota;
 
-    scanf(" %c%*[^:]: %d", &genero, &pontuacao);
-    if (genero == 'a') pesoAcao = pontuacao;
-    else if (genero == 'c') pesoComedia = pontuacao;
-    else if (genero == 's') pesoSuspense = pontuacao;
+    scanf(" %c%*s%*c%d", &genero, &nota);
+    if (genero == 'a') peso1 = nota;
+    else if (genero == 'c') peso2 = nota;
+    else if (genero == 's') peso3 = nota;
 
-    scanf(" %c%*[^:]: %d", &genero, &pontuacao);
-    if (genero == 'a') pesoAcao = pontuacao;
-    else if (genero == 'c') pesoComedia = pontuacao;
-    else if (genero == 's') pesoSuspense = pontuacao;
+    scanf(" %c%*s%*c%d", &genero, &nota);
+    if (genero == 'a') peso1 = nota;
+    else if (genero == 'c') peso2 = nota;
+    else if (genero == 's') peso3 = nota;
 
-    scanf(" %c%*[^:]: %d", &genero, &pontuacao);
-    if (genero == 'a') pesoAcao = pontuacao;
-    else if (genero == 'c') pesoComedia = pontuacao;
-    else if (genero == 's') pesoSuspense = pontuacao;
+    int media1 = (acao1 * peso1) + (comedia1 * peso2) + (suspense1 * peso3);
+    int media2 = (acao2 * peso1) + (comedia2 * peso2) + (suspense2 * peso3);
 
-    int primeiraPont = (acao1 * pesoAcao) + (comedia1 * pesoComedia) + (suspense1 * pesoSuspense);
-    int segundaPont = (acao2 * pesoAcao) + (comedia2 * pesoComedia) + (suspense2 * pesoSuspense);
-
-    if (primeiraPont >= segundaPont) printf("%d\n", primeiroFilme);
-    else printf("%d\n", segundoFilme);
+    if (media1 >= media2) printf("1\n");
+    else printf("2\n");
 
     return 0;
 }

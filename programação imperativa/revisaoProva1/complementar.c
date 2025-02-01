@@ -5,7 +5,7 @@ int main() {
     float horas;
     char area, justificativa;
 
-    scanf("%c%*s %f %c%*s %c", &atividade, &horas, &area, &justificativa);
+    scanf("%c%*s%*c%f%*c%c%*s%*c%c", &atividade, &horas, &area, &justificativa);
 
     if (area == 'c') {
         if (atividade == 'c' || atividade == 'm') {
@@ -21,11 +21,11 @@ int main() {
             else printf("REJEITADA");
         }
         else if (atividade == 's' && horas >= 1.0) printf("ACEITA");
-        else printf("REJEITADA");
+        else printf("REJEITADA\n");
     }
-    else printf("REJEITADA");
+    else printf("REJEITADA\n");
 
-    // printf("%c %f %c %c\n", atividade, horas, area, justificativa);
+    printf("%c %f %c %c\n", atividade, horas, area, justificativa);
 
     return 0;
 }
