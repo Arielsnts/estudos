@@ -25,7 +25,5 @@ int main() {
     }
     else printf("REJEITADA\n");
 
-    printf("%c %f %c %c\n", atividade, horas, area, justificativa);
-
     return 0;
 }

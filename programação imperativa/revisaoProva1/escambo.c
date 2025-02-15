@@ -4,7 +4,7 @@ int main() {
     int capacidade, encomendas;
     float custo;
 
-    scanf("%d %d %f", &capacidade, &encomendas, &custo);
+    scanf("%d%*c%d%*c%f", &capacidade, &encomendas, &custo);
 
     float calculo = (encomendas - capacidade) * custo;
 
