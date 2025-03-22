@@ -7,7 +7,7 @@ int main() {
     scanf("%d%*c%d", &entrada, &expoente);
 
     for (int i = 0; i < expoente; i++) {
-        entrada *= entrada;
+        entrada * entrada;
     }
 
     printf("%d\n", entrada);
