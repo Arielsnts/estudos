@@ -2,13 +2,13 @@
 #include <stdlib.h>
 
 int main() {
+
     printf("~Calculadora Inteira~\n");
     printf("-------------------\n");
     printf("1 - Soma\n2 - Subtração\n3 - Multiplicação\n4 - Divisão\n5 - Sair\n");
     printf("-------------------\n");
 
-    while (1)
-    {
+    while (1) {
         int escolha = 0;
         int num1 = 0, num2 = 0;
         int resultado = 0;

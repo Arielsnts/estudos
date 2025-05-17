@@ -4,7 +4,7 @@ def formatar(num):
 
 print("~~ Agenda de Contatos ~~")
 print("--------------------")
-print("1 - Cadastrar contato\n2 - Procurar contato\n3 - Remover contato\n4 - Sair")
+print("1 - Cadastrar contato\n2 - Procurar contato\n3 - Remover contato\n4 - Lista completa\n5 - Sair")
 print("--------------------")
 
 agenda = {}
@@ -12,10 +12,11 @@ agenda = {}
 while True:
     escolha = int(input("\nDigite a opção: "))
 
-    if escolha < 1 or escolha > 4:
+    if escolha < 1 or escolha > 5:
         print("\nOpção inválida! Digite novamente.")
         continue
-    elif escolha == 4:
+    elif escolha == 5:
+        print("Encerrando programa!")
         break
 
     if escolha == 1:
@@ -50,3 +51,11 @@ while True:
             print("\n--------------------")
             print("Contato não encontrado")
             print("--------------------")
+    elif escolha == 4:
+        print("\n--------------------")
+        if not agenda:
+            print("Lista vazia!")
+        else:
+            for chave, valor in agenda.items():
+                print(f"Nome: {chave}\nNúmero: {formatar(valor)}")
+        print("--------------------")
