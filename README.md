@@ -2,9 +2,6 @@
  
 Projetos que desenvolvi:
 
-- Warfare Invaders:
-https://arielsnts.github.io/warfare-invaders/
-
 - Jokenpo:
 https://arielsnts.github.io/estudos/javascript/jokenpo/
 
