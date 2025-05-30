@@ -98,9 +98,8 @@ int main() {
                 if (funct3 == 0b000 && funct7 == 0b0000000) {
                     uint32_t data = reg[rs1] + reg[rs2];
 
-                    fprintf(output, "0x%08x:add    %s,%s,%s  %s=0x%08x+0x%08x=0x%08x\n",
-                            pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
-                            reg_nomes[rd], reg[rs1], reg[rs2], data);
+                    fprintf(output, "0x%08x:add    %s,%s,%s     rd=0x%08x+0x%08x=0x%08x\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2], reg[rs1], reg[rs2], data);
 
                     // registrador zero (x0) nunca é modificado
                     if (rd != 0) reg[rd] = data;
@@ -110,7 +109,7 @@ int main() {
                 else if (funct3 == 0b000 && funct7 == 0b0100000) {
                     uint32_t data = reg[rs1] - reg[rs2];
 
-                    fprintf(output, "0x%08x:sub    %s,%s,%s  %s=0x%08x-0x%08x=0x%08x\n",
+                    fprintf(output, "0x%08x:sub    %s,%s,%s     %s=0x%08x-0x%08x=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
                             reg_nomes[rd], reg[rs1], reg[rs2], data);
 
@@ -122,7 +121,7 @@ int main() {
                 else if (funct3 == 0b001 && funct7 == 0b0000000) {
                     uint32_t data = reg[rs1] << (reg[rs2] & 0x1F);
 
-                    fprintf(output, "0x%08x:sll    %s,%s,%s  %s=0x%08x<<%u=0x%08x\n",
+                    fprintf(output, "0x%08x:sll    %s,%s,%s     %s=0x%08x<<%u=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
                             reg_nomes[rd], reg[rs1], reg[rs2] & 0x1F, data);
 
@@ -134,7 +133,7 @@ int main() {
                 else if (funct3 == 0b010 && funct7 == 0b0000000) {
                     uint32_t data = ((int32_t) reg[rs1] < (int32_t) reg[rs2]) ? 1 : 0;
 
-                    fprintf(output, "0x%08x:slt    %s,%s,%s  %s=(0x%08x<0x%08x)=%u\n",
+                    fprintf(output, "0x%08x:slt    %s,%s,%s     %s=(0x%08x<0x%08x)=%u\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
                             reg_nomes[rd], reg[rs1], reg[rs2], data);
                     
@@ -146,7 +145,7 @@ int main() {
                 else if (funct3 == 0b011 && funct7 == 0b0000000) {
                     uint32_t data = (reg[rs1] < reg[rs2]) ? 1 : 0;
 
-                    fprintf(output, "0x%08x:sltu   %s,%s,%s  %s=(0x%08x<0x%08x)=%u\n",
+                    fprintf(output, "0x%08x:sltu   %s,%s,%s     %s=(0x%08x<0x%08x)=%u\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
                             reg_nomes[rd], reg[rs1], reg[rs2], data);
 
@@ -157,7 +156,7 @@ int main() {
                 else if (funct3 == 0b100 && funct7 == 0b0000000) {
                     uint32_t data = reg[rs1] ^ reg[rs2];
 
-                    fprintf(output, "0x%08x:xor    %s,%s,%s  %s=0x%08x^0x%08x=0x%08x\n",
+                    fprintf(output, "0x%08x:xor    %s,%s,%s     %s=0x%08x^0x%08x=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
                             reg_nomes[rd], reg[rs1], reg[rs2], data);
 
@@ -169,7 +168,7 @@ int main() {
                 else if (funct3 == 0b101 && funct7 == 0b0000000) {
                     uint32_t data = reg[rs1] >> (reg[rs2] & 0x1F);
 
-                    fprintf(output, "0x%08x:srl    %s,%s,%s  %s=0x%08x>>u5=0x%08x\n",
+                    fprintf(output, "0x%08x:srl    %s,%s,%s     %s=0x%08x>>u5=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
                             reg_nomes[rd], reg[rs1], data);
 
@@ -181,7 +180,7 @@ int main() {
                 else if (funct3 == 0b101 && funct7 == 0b0100000) {
                     uint32_t data = (uint32_t)(((int32_t) reg[rs1]) >> (reg[rs2] & 0x1F));
 
-                    fprintf(output, "0x%08x:sra    %s,%s,%s  %s=0x%08x>>>u5=0x%08x\n",
+                    fprintf(output, "0x%08x:sra    %s,%s,%s     %s=0x%08x>>>u5=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
                             reg_nomes[rd], reg[rs1], data);
 
@@ -192,7 +191,7 @@ int main() {
                 else if (funct3 == 0b110 && funct7 == 0b0000000) {
                     uint32_t data = reg[rs1] | reg[rs2];
 
-                    fprintf(output, "0x%08x:or     %s,%s,%s  %s=0x%08x|0x%08x=0x%08x\n",
+                    fprintf(output, "0x%08x:or     %s,%s,%s     %s=0x%08x|0x%08x=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
                             reg_nomes[rd], reg[rs1], reg[rs2], data);
 
@@ -217,8 +216,8 @@ int main() {
                 if (funct3 == 0b000) {
                     uint32_t data = reg[rs1] + imm_i;
 
-                    fprintf(output, "0x%08x:addi   %s,%s,%d   %s=0x%08x+0x%08x=0x%08x\n",
-                            pc, reg_nomes[rd], reg_nomes[rs1], imm_i, reg_nomes[rd], reg[rs1], imm_i, data);
+                    fprintf(output, "0x%08x:addi   %s,%s,0x%03x     %s=0x%08x+0x%08x=0x%08x\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], (uint16_t)(imm_i & 0xFFF), reg_nomes[rd], reg[rs1], imm_i, data);
 
                     if (rd != 0) reg[rd] = data;
                 }
@@ -276,8 +275,8 @@ int main() {
                 /* desloca os bits do registrador rs1 para a esquerda, por um número de posições indicado no campo imediato */
                 else if (funct3 == 0b001 && funct7 == 0b0000000) {
                     uint32_t data = reg[rs1] << ((instruction >> 20) & 0x1F);
-
-                    fprintf(output, "0x%08x:slli   %s,%s,%u   %s=0x%08x<<%u=0x%08x\n",
+      
+                    fprintf(output, "0x%08x:slli   %s,%s,%u      %s=0x%08x<<%u=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], (instruction >> 20) & 0x1F,
                             reg_nomes[rd], reg[rs1], (instruction >> 20) & 0x1F, data);
 
@@ -288,7 +287,7 @@ int main() {
                 else if (funct3 == 0b101 && funct7 == 0b0000000) {
                     uint32_t data = reg[rs1] >> ((instruction >> 20) & 0x1F);
 
-                    fprintf(output, "0x%08x:srli   %s,%s,%u   %s=0x%08x>>%u=0x%08x\n",
+                    fprintf(output, "0x%08x:srli   %s,%s,%u      %s=0x%08x>>%u=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], (instruction >> 20) & 0x1F,
                             reg_nomes[rd], reg[rs1], (instruction >> 20) & 0x1F, data);
 
@@ -300,7 +299,7 @@ int main() {
                 else if (funct3 == 0b101 && funct7 == 0b0100000) {
                     uint32_t data = (uint32_t)(((int32_t)reg[rs1]) >> ((instruction >> 20) & 0x1F));
 
-                    fprintf(output, "0x%08x:srai   %s,%s,%u   %s=0x%08x>>%u=0x%08x\n",
+                    fprintf(output, "0x%08x:srai   %s,%s,%u      %s=0x%08x>>%u=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], (instruction >> 20) & 0x1F,
                             reg_nomes[rd], reg[rs1], (instruction >> 20) & 0x1F, data);
 
@@ -316,7 +315,7 @@ int main() {
 
                     if (rd != 0) reg[rd] = (int32_t)data;
 
-                    fprintf(output, "0x%08x:lb     %s,0x%03x(%s)   %s=mem[0x%08x]=0x%08x\n",
+                    fprintf(output, "0x%08x:lb     %s,0x%03x(%s)  %s=mem[0x%08x]=0x%08x\n",
                             pc, reg_nomes[rd], imm_i & 0xFFF, reg_nomes[rs1],
                             reg_nomes[rd], reg[rs1] + imm_i, reg[rd]);
                 }
@@ -327,7 +326,7 @@ int main() {
 
                     if (rd != 0) reg[rd] = (int32_t)data;
 
-                    fprintf(output, "0x%08x:lh     %s,0x%03x(%s)   %s=mem[0x%08x]=0x%08x\n",
+                    fprintf(output, "0x%08x:lh     %s,0x%03x(%s)  %s=mem[0x%08x]=0x%08x\n",
                             pc, reg_nomes[rd], imm_i & 0xFFF, reg_nomes[rs1],
                             reg_nomes[rd], reg[rs1] + imm_i, reg[rd]);
                 }
@@ -338,7 +337,7 @@ int main() {
 
                     if (rd != 0) reg[rd] = data;
 
-                    fprintf(output, "0x%08x:lw     %s,0x%03x(%s)   %s=mem[0x%08x]=0x%08x\n",
+                    fprintf(output, "0x%08x:lw     %s,0x%03x(%s)  %s=mem[0x%08x]=0x%08x\n",
                             pc, reg_nomes[rd], imm_i & 0xFFF, reg_nomes[rs1],
                             reg_nomes[rd], reg[rs1] + imm_i, reg[rd]);
                 }
@@ -349,7 +348,7 @@ int main() {
 
                     if (rd != 0) reg[rd] = (uint32_t)data;
 
-                    fprintf(output, "0x%08x:lbu    %s,0x%03x(%s)   %s=mem[0x%08x]=0x%08x\n",
+                    fprintf(output, "0x%08x:lbu    %s,0x%03x(%s)  %s=mem[0x%08x]=0x%08x\n",
                             pc, reg_nomes[rd], imm_i & 0xFFF, reg_nomes[rs1],
                             reg_nomes[rd], reg[rs1] + imm_i, reg[rd]);
                 }
@@ -360,7 +359,7 @@ int main() {
 
                     if (rd != 0) reg[rd] = (uint32_t)data;
 
-                    fprintf(output, "0x%08x:lhu    %s,0x%03x(%s)   %s=mem[0x%08x]=0x%08x\n",
+                    fprintf(output, "0x%08x:lhu    %s,0x%03x(%s)  %s=mem[0x%08x]=0x%08x\n",
                             pc, reg_nomes[rd], imm_i & 0xFFF, reg_nomes[rs1],
                             reg_nomes[rd], reg[rs1] + imm_i, reg[rd]);
                 }
@@ -391,13 +390,13 @@ int main() {
                 /* Armazena 32 bits completos do registrador rs2 na memória. */
                 else if (funct3 == 0b010) {
                     uint32_t data = reg[rs2];
-                    *((uint32_t*)&mem[reg[rs1] + imm_s]) = data;
-                    
+                    *((uint32_t*)&mem[reg[rs1] + imm_s - offset]) = data;
+
                     fprintf(output, "0x%08x:sw     %s,0x%03x(%s) mem[0x%08x]=0x%08x\n",
-                        pc, reg_nomes[rs2], imm_s & 0xFFF, reg_nomes[rs1],
-                        reg[rs1] + imm_s, data);
-                    }
-                    break;
+                            pc, reg_nomes[rs2], imm_s & 0xFFF, reg_nomes[rs1],
+                            reg[rs1] + imm_s, data);
+                }
+                break;
             case 0b1100011:
                 // instruções branch
                 /*Se reg[rs1] == reg[rs2], desvia (pc = pc + imm_b). Caso contrário, segue para próxima (pc = pc + 4)*/
@@ -497,34 +496,32 @@ int main() {
                 }
                 break;
             case 0b1101111:
-            // operação jal
-            // Salva (pc+4) em rd, depois PC = PC + imm_j
-            if (opcode == 0b1101111) {
-                uint32_t next = pc + imm_j;
-                uint32_t returnPC = pc + 4;
+                // operação jal
+                // Salva (pc+4) em rd, depois PC = PC + imm_j
+                    uint32_t next = pc + imm_j;
+                    uint32_t returnPC = pc + 4;
 
-                fprintf(output, "0x%08x:jal    %s,0x%08x     pc=0x%08x,rd=0x%08x\n",
-                        pc, reg_nomes[rd], next, next, returnPC);
+                    fprintf(output, "0x%08x:jal    %s,0x%05x     pc=0x%08x,rd=0x%08x\n",
+                            pc, reg_nomes[rd], (imm_j >> 1) & 0xFFFFF, next, returnPC);
 
-                if (rd != 0) reg[rd] = returnPC;
-                pc = next;
-                continue;
-            }
-            // operação jalr
-            // Salva (pc+4) em rd
-            if (opcode == 0b1100111 && funct3 == 0b000) {
-                uint32_t data = (reg[rs1] + imm_i) & ~1;
-                uint32_t return_addr = pc + 4;
+                    if (rd != 0) reg[rd] = returnPC;
+                    pc = next;
+                    continue;
+            case 0b1100111:
+                // operação jalr
+                if (funct3 == 0b000) {
+                    uint32_t data = (reg[rs1] + imm_i) & ~1;  // zera o bit 0
+                    uint32_t return_addr = pc + 4;
 
-                fprintf(output, "0x%08x:jalr   %s,%s,0x%08x   pc=0x%08x+0x%08x,rd=0x%08x\n",
-                        pc, reg_nomes[rd], reg_nomes[rs1], imm_i,
-                        reg[rs1], imm_i, return_addr);
+                    fprintf(output, "0x%08x:jalr   %s,%s,0x%08x     pc=0x%08x+0x%08x,rd=0x%08x\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], imm_i,
+                            reg[rs1], imm_i, return_addr);
 
-                if (rd != 0) reg[rd] = return_addr;
-                pc = data;
-                continue;
-            }
-            break;
+                    if (rd != 0) reg[rd] = return_addr;
+                    pc = data;
+                    continue;
+                }
+                break;
             case 0b0110111: {
                 // operação lui
                 uint32_t imm_u = instruction & 0xFFFFF000;
@@ -541,8 +538,8 @@ int main() {
                 uint32_t imm_u = instruction & 0xFFFFF000;
                 uint32_t result = pc + imm_u;
 
-                fprintf(output, "0x%08x:auipc  %s,0x%05x     rd=0x%08x+0x%05x000=0x%08x\n",
-                        pc, reg_nomes[rd], imm_u >> 12, pc, imm_u >> 12, result);
+                fprintf(output, "0x%08x:auipc  %s,0x%05x     %s=0x%08x+0x%05x000=0x%08x\n",
+                        pc, reg_nomes[rd], imm_u >> 12, reg_nomes[rd], pc, imm_u >> 12, result);
 
                 if (rd != 0) reg[rd] = result;
                 pc += 4;
