@@ -2,10 +2,18 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-int main() {
+int main(int argc, char* argv[]) {
+    printf("--------------------POXIM-V--------------------\n");
     // abertura dos arquivos de entrada e saída
-    FILE* input = fopen("input.hex", "r");
-    FILE* output = fopen("output.out", "w");
+	FILE* input = fopen(argv[1], "r");
+    if (input == NULL) {
+        printf("Falha na leitura da entrada.\n");
+        return 1;
+    }
+	FILE* output = fopen(argv[2], "w");
+
+    printf("Entrada e saída lidos com sucesso!\n");
+
     
     // endereço inicial da memória
     const uint32_t offset = 0x80000000;
@@ -23,6 +31,10 @@ int main() {
 
     // criação de array para memória
     uint8_t* mem = (uint8_t*)(malloc(32 * 1024));
+    if (mem == NULL) {
+        printf("Erro ao alocar memória!\n");
+        return 1;
+    }
 
     // ENTRADA
     // lê os bytes e armazena na memória
@@ -44,7 +56,9 @@ int main() {
             }
         }
     }
-
+    
+    printf("Memória alocada com sucesso!\n");
+    
     uint8_t run = 1;
 
     while (run) {
@@ -89,7 +103,6 @@ int main() {
             imm_j |= 0xFFF00000; 
         }
 
-
         switch (opcode) {
             case 0b0110011:
                 // instruções R-type
@@ -98,8 +111,8 @@ int main() {
                 if (funct3 == 0b000 && funct7 == 0b0000000) {
                     uint32_t data = reg[rs1] + reg[rs2];
 
-                    fprintf(output, "0x%08x:add    %s,%s,%s     rd=0x%08x+0x%08x=0x%08x\n",
-                            pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2], reg[rs1], reg[rs2], data);
+                    fprintf(output, "0x%08x:add    %s,%s,%s     %s=0x%08x+0x%08x=0x%08x\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2], reg_nomes[rd], reg[rs1], reg[rs2], data);
 
                     // registrador zero (x0) nunca é modificado
                     if (rd != 0) reg[rd] = data;
@@ -203,6 +216,118 @@ int main() {
                     uint32_t data = reg[rs1] & reg[rs2];
 
                     fprintf(output, "0x%08x:and    %s,%s,%s     %s=0x%08x&0x%08x=0x%08x\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
+                            reg_nomes[rd], reg[rs1], reg[rs2], data);
+
+                    if (rd != 0) reg[rd] = data;
+                }
+                // operação mul
+                else if (funct3 == 0b000 && funct7 == 0b0000001) {
+                    uint32_t data = reg[rs1] * reg[rs2];
+
+                    fprintf(output, "0x%08x:mul    %s,%s,%s     %s=0x%08x*0x%08x=0x%08x\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
+                            reg_nomes[rd], reg[rs1], reg[rs2], data);
+
+                    if (rd != 0) reg[rd] = data;
+                }
+                // operação mulh
+                // Multiplica rs1 como signed e rs2 como unsigned. Retorna a parte alta dos 64 bits de resultado.
+                else if (funct3 == 0b001 && funct7 == 0b0000001) {
+                    int64_t res = (int64_t)(int32_t)reg[rs1] * (int64_t)(int32_t)reg[rs2];
+                    uint32_t data = (uint32_t)(res >> 32); 
+
+                    fprintf(output, "0x%08x:mulh   %s,%s,%s     %s=0x%08x*0x%08x=0x%08x\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
+                            reg_nomes[rd], reg[rs1], reg[rs2], data);
+
+                    if (rd != 0) reg[rd] = data;
+                }
+                // operação mulhsu
+                // Multiplica rs1 como signed e rs2 como unsigned. Retorna a parte alta dos 64 bits de resultado.
+                else if (funct3 == 0b010 && funct7 == 0b0000001) {
+                    int64_t res = (int64_t)(int32_t)reg[rs1] * (uint64_t)reg[rs2];
+                    uint32_t data = (uint32_t)(res >> 32);
+
+                    fprintf(output, "0x%08x:mulhsu %s,%s,%s     %s=0x%08x*0x%08x=0x%08x\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
+                            reg_nomes[rd], reg[rs1], reg[rs2], data);
+
+                    if (rd != 0) reg[rd] = data;
+                }
+                // operação mulhu
+                // Multiplica rs1 e rs2 como unsigned.
+                else if (funct3 == 0b011 && funct7 == 0b0000001) {
+                    uint64_t res = (uint64_t)reg[rs1] * (uint64_t)reg[rs2];
+                    uint32_t data = (uint32_t)(res >> 32);
+
+                    fprintf(output, "0x%08x:mulhu  %s,%s,%s     %s=0x%08x*0x%08x=0x%08x\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
+                            reg_nomes[rd], reg[rs1], reg[rs2], data);
+
+                    if (rd != 0) reg[rd] = data;
+                }
+                // operação div
+                else if (funct3 == 0b100 && funct7 == 0b0000001) {
+                    uint32_t data;
+                    if (reg[rs2] == 0) {
+                        data = -1;
+                    }
+                    else {
+                        data = reg[rs1] / reg[rs2];
+                    }
+
+                    fprintf(output, "0x%08x:div    %s,%s,%s     %s=0x%08x/0x%08x=0x%08x\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
+                            reg_nomes[rd], reg[rs1], reg[rs2], data);
+
+                    if (rd != 0) reg[rd] = data;
+                }
+                // operação divu
+                else if (funct3 == 0b101 && funct7 == 0b0000001) {
+                    uint32_t data;
+
+                    if (reg[rs2] == 0) {
+                        data = 0xFFFFFFFF;
+                    } else {
+                        data = reg[rs1] / reg[rs2];
+                    }
+
+                    fprintf(output, "0x%08x:divu   %s,%s,%s     %s=0x%08x/0x%08x=0x%08x\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
+                            reg_nomes[rd], reg[rs1], reg[rs2], data);
+
+                    if (rd != 0) reg[rd] = data;
+                }
+                // operação rem
+                else if (funct3 == 0b110 && funct7 == 0b0000001) {
+                    int32_t data;
+
+                    if (reg[rs2] == 0) {
+                        data = reg[rs1];
+                    } 
+                    else {
+                        data = reg[rs1] % reg[rs2];
+                    }
+
+                    fprintf(output, "0x%08x:rem    %s,%s,%s     %s=0x%08x%%0x%08x=0x%08x\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
+                            reg_nomes[rd], reg[rs1], reg[rs2], data);
+
+                    if (rd != 0) reg[rd] = data;
+                }
+                // operação remu
+                else if (funct3 == 0b110 && funct7 == 0b0000001) {
+                    int32_t data;
+
+                    if (reg[rs2] == 0) {
+                        data = reg[rs1];
+                    } 
+                    else {
+                        data = reg[rs1] % reg[rs2];
+                    }
+
+                    fprintf(output, "0x%08x:rem    %s,%s,%s     %s=0x%08x%%0x%08x=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
                             reg_nomes[rd], reg[rs1], reg[rs2], data);
 
@@ -333,15 +458,20 @@ int main() {
                 // operação lw
                 /* Carrega 4 bytes (32 bits) da memória para um registrador. */
                 else if (funct3 == 0b010) {
-                    uint32_t data = *((uint32_t*)&mem[reg[rs1] + imm_i]);
+                    uint32_t endereco = (reg[rs1] + (int32_t)imm_i) - offset;
+
+                    uint32_t data = mem[endereco] |
+                                    (mem[endereco + 1] << 8) |
+                                    (mem[endereco + 2] << 16) |
+                                    (mem[endereco + 3] << 24);
 
                     if (rd != 0) reg[rd] = data;
 
-                    fprintf(output, "0x%08x:lw     %s,0x%03x(%s)  %s=mem[0x%08x]=0x%08x\n",
-                            pc, reg_nomes[rd], imm_i & 0xFFF, reg_nomes[rs1],
-                            reg_nomes[rd], reg[rs1] + imm_i, reg[rd]);
+                    fprintf(output, "0x%08x:lw     %s,%03x(%s)  %s=mem[0x%08x]=0x%08x\n",
+                            pc, reg_nomes[rd], (int32_t)imm_i, reg_nomes[rs1],
+                            reg_nomes[rd], reg[rs1] + (int32_t)imm_i, data);
                 }
-                // operação lbu
+                            // operação lbu
                 /* Carrega 1 byte (8 bits) da memória e zero-extende para 32 bits. */
                 else if (funct3 == 0b100) {
                     uint8_t data = *((uint8_t*)&mem[reg[rs1] + imm_i]);
@@ -434,19 +564,20 @@ int main() {
                 }
                 // operação blt
                 /* Desvia (pc = pc + imm_b) se o conteúdo de rs1 for menor que o de rs2 (comparação com sinal).*/
+                // tem alguma coisa errada
                 else if (funct3 == 0b100) {
-                    if ((int32_t)reg[rs1] < (int32_t)reg[rs2]) {
-                        fprintf(output, "0x%08x:blt    %s,%s,0x%08x  (0x%08x<0x%08x)=%u->pc=0x%08x\n",
-                                pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
-                                reg[rs1], reg[rs2], (int32_t)reg[rs1] < (int32_t)reg[rs2], pc + imm_b);
+                    if (reg[rs1] < reg[rs2]) {
+                        fprintf(output, "0x%08x:blt    %s,%s,0x%03x         (0x%08x<0x%08x)=1->pc=0x%08x\n",
+                            pc, reg_nomes[rs1], reg_nomes[rs2], (imm_b) & 0xFFF,
+                            reg[rs1], reg[rs2], pc + imm_b);
                                 
                         pc += imm_b;
                         continue;
                     }
                     else {
-                        fprintf(output, "0x%08x:blt    %s,%s,0x%08x  (0x%08x<0x%08x)=%u->pc=0x%08x\n",
-                                pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
-                                reg[rs1], reg[rs2], (int32_t)reg[rs1] < (int32_t)reg[rs2], pc + 4);
+                        fprintf(output, "0x%08x:blt    %s,%s,0x%03x         (0x%08x<0x%08x)=0->pc=0x%08x\n",
+                            pc, reg_nomes[rs1], reg_nomes[rs2], (uint32_t)(imm_b) & 0xFFF,
+                            reg[rs1], reg[rs2], pc + 4);
                     }
                 }
                 // operação bge
@@ -501,8 +632,8 @@ int main() {
                     uint32_t next = pc + imm_j;
                     uint32_t returnPC = pc + 4;
 
-                    fprintf(output, "0x%08x:jal    %s,0x%05x     pc=0x%08x,rd=0x%08x\n",
-                            pc, reg_nomes[rd], (imm_j >> 1) & 0xFFFFF, next, returnPC);
+                    fprintf(output, "0x%08x:jal    %s,0x%05x     pc=0x%08x,%s=0x%08x\n",
+                            pc, reg_nomes[rd], (imm_j >> 1) & 0xFFFFF, next, reg_nomes[rd], returnPC);
 
                     if (rd != 0) reg[rd] = returnPC;
                     pc = next;
@@ -513,9 +644,9 @@ int main() {
                     uint32_t data = (reg[rs1] + imm_i) & ~1;  // zera o bit 0
                     uint32_t return_addr = pc + 4;
 
-                    fprintf(output, "0x%08x:jalr   %s,%s,0x%08x     pc=0x%08x+0x%08x,rd=0x%08x\n",
-                            pc, reg_nomes[rd], reg_nomes[rs1], imm_i,
-                            reg[rs1], imm_i, return_addr);
+                    fprintf(output, "0x%08x:jalr   %s,%s,0x%03x     pc=0x%08x+0x%08x,%s=0x%08x\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], imm_i & 0xFFF,
+                            reg[rs1], imm_i, reg_nomes[rd], return_addr);
 
                     if (rd != 0) reg[rd] = return_addr;
                     pc = data;
@@ -526,8 +657,8 @@ int main() {
                 // operação lui
                 uint32_t imm_u = instruction & 0xFFFFF000;
 
-                fprintf(output, "0x%08x:lui    %s,0x%05x     rd=0x%08x\n",
-                        pc, reg_nomes[rd], imm_u >> 12, imm_u);
+                fprintf(output, "0x%08x:lui    %s,0x%05x     %s=0x%08x\n",
+                        pc, reg_nomes[rd], imm_u >> 12,reg_nomes[rd], imm_u);
 
                 if (rd != 0) reg[rd] = imm_u;
                 pc += 4;
@@ -551,16 +682,25 @@ int main() {
                     fprintf(output, "0x%08x:ebreak\n", pc);
                     run = 0;
                 }
+                // operação ecall
+
+                // operação mret
+
+                // operação csrrw
+
                 break;
             default:
                 // saída para caso de erro
-                printf("ERRO\n");
-                run = 0;
+                printf("Erro de execução em pc = 0x%08x!\n", pc);
+                return 1;
         }
         // incremento de pc para o próximo endereço
         pc += 4;
     }
     
+    printf("Poxim-V executado com sucesso!\n");
+    printf("-----------------------------------------------\n");
+
     // fechando arquivos de entrada e saída
     fclose(input);
     fclose(output);
