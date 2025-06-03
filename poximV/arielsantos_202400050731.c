@@ -85,9 +85,6 @@ int main(int argc, char* argv[]) {
         int32_t imm_i = ((int32_t)(instruction)) >> 20;
         // leitura do campo imm sem sinal (12 bits)
         uint32_t imm_u = (instruction >> 20) & 0xFFF;
-        // // leitura do campo imm_u2
-        // uint32_t imm_u2 = instruction & 0xFFFFF000;
-
         // leitura do imm S-type
         /* O imediato de 12 bits está dividido em duas partes: 
         instruction[31:25] = 7 bits
@@ -696,12 +693,6 @@ int main(int argc, char* argv[]) {
                     fprintf(output, "0x%08x:ebreak\n", pc);
                     run = 0;
                 }
-                // operação ecall
-
-                // operação mret
-
-                // operação csrrw
-
                 break;
             default:
                 // saída para caso de erro
