@@ -323,7 +323,7 @@ int main(int argc, char* argv[]) {
                     if (rd != 0) reg[rd] = valor;
                 }
                 // operação remu
-                else if (funct3 == 0b110 && funct7 == 0b0000001) {
+                else if (funct3 == 0b111 && funct7 == 0b0000001) {
                     int32_t valor;
 
                     if (reg[rs2] == 0) {
@@ -333,7 +333,7 @@ int main(int argc, char* argv[]) {
                         valor = reg[rs1] % reg[rs2];
                     }
 
-                    fprintf(output, "0x%08x:rem    %s,%s,%s     %s=0x%08x%%0x%08x=0x%08x\n",
+                    fprintf(output, "0x%08x:remu    %s,%s,%s     %s=0x%08x%%0x%08x=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
                             reg_nomes[rd], reg[rs1], reg[rs2], valor);
 
