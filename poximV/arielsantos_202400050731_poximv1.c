@@ -540,8 +540,8 @@ int main(int argc, char* argv[]) {
                 // operação beq
                 // Se reg[rs1] == reg[rs2], desvia (pc = pc + imm_b). Caso contrário, segue para próxima (pc = pc + 4)
                 if (funct3 == 0b000) {
-                    if (reg[rs1] == reg[rs2]) {
-                        fprintf(output, "0x%08x:beq    %s,%s,0x%08x  (0x%08x==0x%08x)=%u->pc=0x%08x\n",
+                    if ((int32_t)reg[rs1] == (int32_t)reg[rs2]) {
+                        fprintf(output, "0x%08x:beq    %s,%s,0x%03x  (0x%08x==0x%08x)=%u->pc=0x%08x\n",
                             pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
                             reg[rs1], reg[rs2], reg[rs1] == reg[rs2], pc + imm_b);
                         
@@ -557,7 +557,7 @@ int main(int argc, char* argv[]) {
                 // operação bne
                 // Desvia (pc = pc + imm_b) se o conteúdo de rs1 for diferente do conteúdo de rs2.
                 else if (funct3 == 0b001) {
-                    if (reg[rs1] != reg[rs2]) {
+                    if ((int32_t)reg[rs1] != (int32_t)reg[rs2]) {
                         fprintf(output, "0x%08x:bne    %s,%s,0x%08x  (0x%08x!=0x%08x)=%u->pc=0x%08x\n",
                                 pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
                                 reg[rs1], reg[rs2], reg[rs1] != reg[rs2], pc + imm_b);
@@ -575,7 +575,7 @@ int main(int argc, char* argv[]) {
                 /* Desvia (pc = pc + imm_b) se o conteúdo de rs1 for menor que o de rs2 (comparação com sinal).*/
                 // tem alguma coisa errada
                 else if (funct3 == 0b100) {
-                    if (reg[rs1] < reg[rs2]) {
+                    if ((int32_t)reg[rs1] < (int32_t)reg[rs2]) {
                         fprintf(output, "0x%08x:blt    %s,%s,0x%03x         (0x%08x<0x%08x)=1->pc=0x%08x\n",
                             pc, reg_nomes[rs1], reg_nomes[rs2], (imm_b) & 0xFFF,
                             reg[rs1], reg[rs2], pc + imm_b);
