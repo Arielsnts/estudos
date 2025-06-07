@@ -5,15 +5,15 @@
 int main(int argc, char* argv[]) {
     printf("--------------------POXIM-V--------------------\n");
     // abertura dos arquivos de entrada e saída
-	FILE* input = fopen(argv[1], "r");
-    if (input == NULL) {
-        printf("Falha na leitura da entrada.\n");
-        return 1;
-    }
-	FILE* output = fopen(argv[2], "w");
+	// FILE* input = fopen(argv[1], "r");
+    // if (input == NULL) {
+    //     printf("Falha na leitura da entrada.\n");
+    //     return 1;
+    // }
+	// FILE* output = fopen(argv[2], "w");
 
-    // FILE* input = fopen("input.hex", "r");
-    // FILE* output = fopen("output.out", "w");
+    FILE* input = fopen("input.hex", "r");
+    FILE* output = fopen("output.out", "w");
 
     printf("Entrada e saída lidos com sucesso!\n");
 
@@ -540,34 +540,34 @@ int main(int argc, char* argv[]) {
                 // operação beq
                 // Se reg[rs1] == reg[rs2], desvia (pc = pc + imm_b). Caso contrário, segue para próxima (pc = pc + 4)
                 if (funct3 == 0b000) {
-                    if ((int32_t)reg[rs1] == (int32_t)reg[rs2]) {
+                    if (reg[rs1] == reg[rs2]) {
                         fprintf(output, "0x%08x:beq    %s,%s,0x%03x  (0x%08x==0x%08x)=%u->pc=0x%08x\n",
-                            pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
+                            pc, reg_nomes[rs1], reg_nomes[rs2], imm_b,
                             reg[rs1], reg[rs2], reg[rs1] == reg[rs2], pc + imm_b);
                         
                         pc += imm_b;
                         continue;
                     }
                     else {
-                        fprintf(output, "0x%08x:beq    %s,%s,0x%08x  (0x%08x==0x%08x)=%u->pc=0x%08x\n",
-                            pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
+                        fprintf(output, "0x%08x:beq    %s,%s,0x%03x  (0x%08x==0x%08x)=%u->pc=0x%08x\n",
+                            pc, reg_nomes[rs1], reg_nomes[rs2], imm_b,
                             reg[rs1], reg[rs2], reg[rs1] == reg[rs2], pc + 4);
                     }
                 }
                 // operação bne
                 // Desvia (pc = pc + imm_b) se o conteúdo de rs1 for diferente do conteúdo de rs2.
                 else if (funct3 == 0b001) {
-                    if ((int32_t)reg[rs1] != (int32_t)reg[rs2]) {
-                        fprintf(output, "0x%08x:bne    %s,%s,0x%08x  (0x%08x!=0x%08x)=%u->pc=0x%08x\n",
-                                pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
+                    if (reg[rs1] != reg[rs2]) {
+                        fprintf(output, "0x%08x:bne    %s,%s,0x%03x  (0x%08x!=0x%08x)=%u->pc=0x%08x\n",
+                                pc, reg_nomes[rs1], reg_nomes[rs2], imm_b,
                                 reg[rs1], reg[rs2], reg[rs1] != reg[rs2], pc + imm_b);
                                 
                         pc += imm_b;
                         continue;
                     }
                     else {
-                        fprintf(output, "0x%08x:bne    %s,%s,0x%08x  (0x%08x!=0x%08x)=%u->pc=0x%08x\n",
-                            pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
+                        fprintf(output, "0x%08x:bne    %s,%s,0x%03x  (0x%08x!=0x%08x)=%u->pc=0x%08x\n",
+                            pc, reg_nomes[rs1], reg_nomes[rs2], imm_b,
                             reg[rs1], reg[rs2], reg[rs1] != reg[rs2], pc + 4);
                     }
                 }
@@ -577,15 +577,15 @@ int main(int argc, char* argv[]) {
                 else if (funct3 == 0b100) {
                     if ((int32_t)reg[rs1] < (int32_t)reg[rs2]) {
                         fprintf(output, "0x%08x:blt    %s,%s,0x%03x         (0x%08x<0x%08x)=1->pc=0x%08x\n",
-                            pc, reg_nomes[rs1], reg_nomes[rs2], (imm_b) & 0xFFF,
+                            pc, reg_nomes[rs1], reg_nomes[rs2], ((imm_b+4) & 0xFFF),
                             reg[rs1], reg[rs2], pc + imm_b);
                                 
                         pc += imm_b;
                         continue;
-                    }
-                    else {
+                    } 
+                    else { 
                         fprintf(output, "0x%08x:blt    %s,%s,0x%03x         (0x%08x<0x%08x)=0->pc=0x%08x\n",
-                            pc, reg_nomes[rs1], reg_nomes[rs2], (uint32_t)(imm_b) & 0xFFF,
+                            pc, reg_nomes[rs1], reg_nomes[rs2], ((imm_b+4) & 0xFFF),
                             reg[rs1], reg[rs2], pc + 4);
                     }
                 }
@@ -593,44 +593,44 @@ int main(int argc, char* argv[]) {
                 // Desvia (pc = pc + imm_b) se o conteúdo de rs1 for maior ou igual ao de rs2 (comparação com sinal).
                 else if (funct3 == 0b101) {
                     if ((int32_t)reg[rs1] >= (int32_t)reg[rs2]) {
-                        fprintf(output, "0x%08x:bge    %s,%s,0x%08x  (0x%08x>=0x%08x)=%u->pc=0x%08x\n",
-                                pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
+                        fprintf(output, "0x%08x:bge    %s,%s,0x%03x  (0x%08x>=0x%08x)=%u->pc=0x%08x\n",
+                                pc, reg_nomes[rs1], reg_nomes[rs2], imm_b,
                                 reg[rs1], reg[rs2], (int32_t)reg[rs1] >= (int32_t)reg[rs2], pc + imm_b);
                                 
                         pc += imm_b;
                         continue;
                     }
                     else {
-                        fprintf(output, "0x%08x:bge    %s,%s,0x%08x  (0x%08x>=0x%08x)=%u->pc=0x%08x\n",
-                                pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
+                        fprintf(output, "0x%08x:bge    %s,%s,0x%03x  (0x%08x>=0x%08x)=%u->pc=0x%08x\n",
+                                pc, reg_nomes[rs1], reg_nomes[rs2], imm_b,
                                 reg[rs1], reg[rs2], (int32_t)reg[rs1] >= (int32_t)reg[rs2], pc + 4);
                     }
                 }
                 // operação bltu
                 else if (funct3 == 0b110) {
                     if (reg[rs1] < reg[rs2]) {
-                        fprintf(output, "0x%08x:bltu   %s,%s,0x%08x  (0x%08x<0x%08x)=%u->pc=0x%08x\n",
-                                pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
+                        fprintf(output, "0x%08x:bltu   %s,%s,0x%03x  (0x%08x<0x%08x)=%u->pc=0x%08x\n",
+                                pc, reg_nomes[rs1], reg_nomes[rs2], imm_b,
                                 reg[rs1], reg[rs2], reg[rs1] < reg[rs2], pc + imm_b);
                         pc += imm_b;
                         continue;
                     } else {
-                        fprintf(output, "0x%08x:bltu   %s,%s,0x%08x  (0x%08x<0x%08x)=%u->pc=0x%08x\n",
-                                pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
+                        fprintf(output, "0x%08x:bltu   %s,%s,0x%03x  (0x%08x<0x%08x)=%u->pc=0x%08x\n",
+                                pc, reg_nomes[rs1], reg_nomes[rs2], imm_b,
                                 reg[rs1], reg[rs2], reg[rs1] < reg[rs2], pc + 4);
                     }
                 }
                 // operação bgeu
                 else if (funct3 == 0b111) {
                     if (reg[rs1] >= reg[rs2]) {
-                        fprintf(output, "0x%08x:bgeu   %s,%s,0x%08x  (0x%08x>=0x%08x)=%u->pc=0x%08x\n",
-                                pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
+                        fprintf(output, "0x%08x:bgeu   %s,%s,0x%03x  (0x%08x>=0x%08x)=%u->pc=0x%08x\n",
+                                pc, reg_nomes[rs1], reg_nomes[rs2], imm_b,
                                 reg[rs1], reg[rs2], reg[rs1] >= reg[rs2], pc + imm_b);
                         pc += imm_b;
                         continue;
                     } else {
-                        fprintf(output, "0x%08x:bgeu   %s,%s,0x%08x  (0x%08x>=0x%08x)=%u->pc=0x%08x\n",
-                                pc, reg_nomes[rs1], reg_nomes[rs2], pc + imm_b,
+                        fprintf(output, "0x%08x:bgeu   %s,%s,0x%03x  (0x%08x>=0x%08x)=%u->pc=0x%08x\n",
+                                pc, reg_nomes[rs1], reg_nomes[rs2], imm_b,
                                 reg[rs1], reg[rs2], reg[rs1] >= reg[rs2], pc + 4);
                     }
                 }
