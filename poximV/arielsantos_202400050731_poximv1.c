@@ -5,15 +5,15 @@
 int main(int argc, char* argv[]) {
     printf("--------------------POXIM-V--------------------\n");
     // abertura dos arquivos de entrada e saída
-	// FILE* input = fopen(argv[1], "r");
-    // if (input == NULL) {
-    //     printf("Falha na leitura da entrada.\n");
-    //     return 1;
-    // }
-	// FILE* output = fopen(argv[2], "w");
+	FILE* input = fopen(argv[1], "r");
+    if (input == NULL) {
+        printf("Falha na leitura da entrada.\n");
+        return 1;
+    }
+	FILE* output = fopen(argv[2], "w");
 
-    FILE* input = fopen("input.hex", "r");
-    FILE* output = fopen("output.out", "w");
+    // FILE* input = fopen("input.hex", "r");
+    // FILE* output = fopen("output.out", "w");
 
     printf("Entrada e saída lidos com sucesso!\n");
 
