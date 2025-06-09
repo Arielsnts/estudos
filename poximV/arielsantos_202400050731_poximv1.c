@@ -354,7 +354,7 @@ int main(int argc, char* argv[]) {
                 else if (funct3 == 0b111) {
                     uint32_t valor = reg[rs1] & imm_i;
 
-                    fprintf(output, "0x%08x:andi   %s,%s,%d   %s=0x%08x&0x%08x=0x%08x\n",
+                    fprintf(output, "0x%08x:andi   %s,%s,%03x   %s=0x%08x&0x%08x=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], imm_i, reg_nomes[rd], reg[rs1], imm_i, valor);
 
                     if (rd != 0) reg[rd] = valor;
@@ -364,7 +364,7 @@ int main(int argc, char* argv[]) {
                 else if (funct3 == 0b110) {
                     uint32_t valor = reg[rs1] | imm_i;
 
-                    fprintf(output, "0x%08x:ori    %s,%s,%d   %s=0x%08x|0x%08x=0x%08x\n",
+                    fprintf(output, "0x%08x:ori    %s,%s,%03x   %s=0x%08x|0x%08x=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], imm_i, reg_nomes[rd], reg[rs1], imm_i, valor);
 
                     if (rd != 0) reg[rd] = valor;
@@ -374,7 +374,7 @@ int main(int argc, char* argv[]) {
                 else if (funct3 == 0b100) {
                     uint32_t valor = reg[rs1] ^ imm_i;
 
-                    fprintf(output, "0x%08x:xori   %s,%s,%d   %s=0x%08x^0x%08x=0x%08x\n",
+                    fprintf(output, "0x%08x:xori   %s,%s,%03x   %s=0x%08x^0x%08x=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], imm_i, reg_nomes[rd], reg[rs1], imm_i, valor);
 
                     if (rd != 0) reg[rd] = valor;
@@ -384,8 +384,8 @@ int main(int argc, char* argv[]) {
                 else if (funct3 == 0b011) {
                     uint32_t valor = (reg[rs1] < imm_u) ? 1 : 0;
 
-                    fprintf(output, "0x%08x:sltiu  %s,%s,%d   %s=(0x%08x<0x%08x)=%u\n",
-                            pc, reg_nomes[rd], reg_nomes[rs1], imm_i, reg_nomes[rd], reg[rs1], imm_i, valor);
+                    fprintf(output, "0x%08x:sltiu  %s,%s,%03x   %s=(0x%08x<0x%08x)=%u\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], imm_u, reg_nomes[rd], reg[rs1], imm_u, valor);
 
                     if (rd != 0) reg[rd] = valor;
                 }
@@ -394,7 +394,7 @@ int main(int argc, char* argv[]) {
                 else if (funct3 == 0b010) {
                     uint32_t valor = ((int32_t)reg[rs1] < imm_i) ? 1 : 0;
 
-                    fprintf(output, "0x%08x:slti   %s,%s,%d   %s=(0x%08x<0x%08x)=%u\n",
+                    fprintf(output, "0x%08x:slti   %s,%s,%03x   %s=(0x%08x<0x%08x)=%u\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], imm_i, reg_nomes[rd], reg[rs1], imm_i, valor);
 
                     if (rd != 0) reg[rd] = valor;
@@ -498,13 +498,13 @@ int main(int argc, char* argv[]) {
                             reg_nomes[rd], reg[rs1] + imm_i, reg[rd]);
                 }
                 break;
-                case 0b0100011:
+            case 0b0100011:
                 // instruções store
                 // operação sb
                 /* Armazena o byte menos significativo do registrador rs2 na memória. */
                 if (funct3 == 0b000) {
                     uint8_t valor = (uint8_t)(reg[rs2] & 0xFF);
-                    mem[reg[rs1] + imm_s] = valor;
+                    mem[reg[rs1] + imm_s - endereco_inicial] = valor;
 
                     fprintf(output, "0x%08x:sb     %s,0x%03x(%s) mem[0x%08x]=0x%02x\n",
                             pc, reg_nomes[rs2], imm_s & 0xFFF, reg_nomes[rs1],
@@ -514,8 +514,8 @@ int main(int argc, char* argv[]) {
                 /* Armazena os 16 bits menos significativos do registrador rs2 na memória. */
                 else if (funct3 == 0b001) {
                     uint16_t valor = (uint16_t)(reg[rs2] & 0xFFFF);
-                    mem[reg[rs1] + imm_s] = valor & 0xFF;
-                    mem[reg[rs1] + imm_s + 1] = (valor >> 8) & 0xFF;
+                    mem[reg[rs1] + imm_s - endereco_inicial] = valor & 0xFF;
+                    mem[reg[rs1] + imm_s + 1 - endereco_inicial] = (valor >> 8) & 0xFF;
 
                     fprintf(output, "0x%08x:sh     %s,0x%03x(%s) mem[0x%08x]=0x%04x\n",
                             pc, reg_nomes[rs2], imm_s & 0xFFF, reg_nomes[rs1],
