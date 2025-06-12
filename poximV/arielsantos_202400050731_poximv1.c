@@ -6,10 +6,6 @@ int main(int argc, char* argv[]) {
     printf("--------------------POXIM-V--------------------\n");
     // abertura dos arquivos de entrada e saída
 	FILE* input = fopen(argv[1], "r");
-    if (input == NULL) {
-        printf("Falha na leitura da entrada.\n");
-        return 1;
-    }
 	FILE* output = fopen(argv[2], "w");
 
     // FILE* input = fopen("input.hex", "r");
@@ -84,7 +80,7 @@ int main(int argc, char* argv[]) {
         // leitura do campo imm com sinal (12 bits)
         int32_t imm_i = ((int32_t)(instruction)) >> 20;
         // leitura do campo imm sem sinal (12 bits)
-        uint32_t imm_u = (instruction >> 20) & 0xFFF;
+        // uint32_t imm_u = (instruction >> 20) & 0xFFF;
         // leitura do imm S-type
         /* O imediato de 12 bits está dividido em duas partes: 
         instruction[31:25] = 7 bits
@@ -382,10 +378,10 @@ int main(int argc, char* argv[]) {
                 // operação sltiu
                 /* Compara o registrador rs1 com o imediato (imm) como valores sem sinal. */
                 else if (funct3 == 0b011) {
-                    uint32_t valor = (reg[rs1] < imm_u) ? 1 : 0;
+                    uint32_t valor = (reg[rs1] < imm_i) ? 1 : 0;
 
-                    fprintf(output, "0x%08x:sltiu  %s,%s,%03x   %s=(0x%08x<0x%08x)=%u\n",
-                            pc, reg_nomes[rd], reg_nomes[rs1], imm_u, reg_nomes[rd], reg[rs1], imm_u, valor);
+                    fprintf(output, "0x%08x:sltiu  %s,%s,0x%03x   %s=(0x%08x<0x%08x)=%u\n",
+                            pc, reg_nomes[rd], reg_nomes[rs1], imm_i, reg_nomes[rd], reg[rs1], imm_i, valor);
 
                     if (rd != 0) reg[rd] = valor;
                 }
@@ -439,25 +435,27 @@ int main(int argc, char* argv[]) {
                 // operação lb
                 /* Carrega 1 byte com sinal da memória para um registrador. */
                 if (funct3 == 0b000) {
-                    // int8_t valor = *((int8_t*)&mem[reg[rs1] + imm_i]);
-                    int8_t valor = (int8_t) mem[reg[rs1] + imm_i];
+                    uint32_t endereco = reg[rs1] + imm_i;
+                    int8_t valor = (int8_t) mem[endereco - endereco_inicial];
 
                     if (rd != 0) reg[rd] = (int32_t) valor;
 
                     fprintf(output, "0x%08x:lb     %s,0x%03x(%s)  %s=mem[0x%08x]=0x%08x\n",
                             pc, reg_nomes[rd], imm_i & 0xFFF, reg_nomes[rs1],
-                            reg_nomes[rd], reg[rs1] + imm_i, reg[rd]);
+                            reg_nomes[rd], endereco, reg[rd]);
                 }
                 // operação lh
                 /* Carrega 2 bytes (16 bits) da memória para um registrador. */
                 else if (funct3 == 0b001) {
-                    int16_t valor = (int16_t)(mem[reg[rs1] + imm_i] | (mem[reg[rs1] + imm_i + 1] << 8));
+                    uint32_t endereco = reg[rs1] + imm_i;
+                    int16_t valor = (int16_t)(
+                        mem[endereco - endereco_inicial] | (mem[endereco - endereco_inicial + 1] << 8));
 
                     if (rd != 0) reg[rd] = (int32_t) valor;
 
                     fprintf(output, "0x%08x:lh     %s,0x%03x(%s)  %s=mem[0x%08x]=0x%08x\n",
                             pc, reg_nomes[rd], imm_i & 0xFFF, reg_nomes[rs1],
-                            reg_nomes[rd], reg[rs1] + imm_i, reg[rd]);
+                            reg_nomes[rd], endereco, reg[rd]);
                 }
                 // operação lw
                 /* Carrega 4 bytes (32 bits) da memória para um registrador. */
@@ -475,21 +473,23 @@ int main(int argc, char* argv[]) {
                             pc, reg_nomes[rd], (int32_t)imm_i, reg_nomes[rs1],
                             reg_nomes[rd], reg[rs1] + (int32_t)imm_i, valor);
                 }
-                // operação lbu
+                // operação lbureg[rs1] + imm_i]
                 /* Carrega 1 byte (8 bits) da memória e zero-extende para 32 bits. */
                 else if (funct3 == 0b100) {
-                    uint8_t valor = (uint8_t) mem[reg[rs1] + imm_i];
+                    uint32_t endereco = reg[rs1] + imm_i;
+                    uint8_t valor = (uint8_t) mem[endereco - endereco_inicial];
 
                     if (rd != 0) reg[rd] = (uint32_t) valor;
 
                     fprintf(output, "0x%08x:lbu    %s,0x%03x(%s)  %s=mem[0x%08x]=0x%08x\n",
                             pc, reg_nomes[rd], imm_i & 0xFFF, reg_nomes[rs1],
-                            reg_nomes[rd], reg[rs1] + imm_i, reg[rd]);
+                            reg_nomes[rd], endereco, reg[rd]);
                 }
                 // operação lhu
                 /* Carrega 2 bytes (16 bits) da memória e zero-extende para 32 bits. */
                 else if (funct3 == 0b101) {
-                    uint16_t valor = (mem[reg[rs1] + imm_i] | (mem[reg[rs1] + imm_i + 1] << 8));
+                    uint32_t endereco = reg[rs1] + imm_i;
+                    uint16_t valor = (mem[endereco - endereco_inicial] | (mem[endereco - endereco_inicial+ 1] << 8));
 
                     if (rd != 0) reg[rd] = (uint32_t) valor;
 
@@ -545,7 +545,7 @@ int main(int argc, char* argv[]) {
                             pc, reg_nomes[rs1], reg_nomes[rs2], imm_b,
                             reg[rs1], reg[rs2], reg[rs1] == reg[rs2], pc + imm_b);
                         
-                        pc += imm_b;
+                        pc = pc + imm_b;
                         continue;
                     }
                     else {
