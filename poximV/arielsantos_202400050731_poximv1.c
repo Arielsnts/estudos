@@ -268,12 +268,12 @@ int main(int argc, char* argv[]) {
                 }
                 // operação div
                 else if (funct3 == 0b100 && funct7 == 0b0000001) {
-                    uint32_t valor;
+                    int32_t valor;
                     if (reg[rs2] == 0) {
                         valor = -1;
                     }
                     else {
-                        valor = reg[rs1] / reg[rs2];
+                        valor = (int32_t)reg[rs1] / (int32_t) reg[rs2];
                     }
 
                     fprintf(output, "0x%08x:div    %s,%s,%s     %s=0x%08x/0x%08x=0x%08x\n",
@@ -306,7 +306,7 @@ int main(int argc, char* argv[]) {
                         valor = reg[rs1];
                     } 
                     else {
-                        valor = reg[rs1] % reg[rs2];
+                        valor = (int32_t)reg[rs1] % (int32_t)reg[rs2];
                     }
 
                     fprintf(output, "0x%08x:rem    %s,%s,%s     %s=0x%08x%%0x%08x=0x%08x\n",
@@ -317,7 +317,7 @@ int main(int argc, char* argv[]) {
                 }
                 // operação remu
                 else if (funct3 == 0b111 && funct7 == 0b0000001) {
-                    int32_t valor;
+                    uint32_t valor;
 
                     if (reg[rs2] == 0) {
                         valor = reg[rs1];
