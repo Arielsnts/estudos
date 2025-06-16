@@ -180,9 +180,9 @@ int main(int argc, char* argv[]) {
                 else if (funct3 == 0b101 && funct7 == 0b0000000) {
                     uint32_t valor = reg[rs1] >> (reg[rs2] & 0x1F);
 
-                    fprintf(output, "0x%08x:srl    %s,%s,%s     %s=0x%08x>>u5=0x%08x\n",
+                    fprintf(output, "0x%08x:srl    %s,%s,%s     %s=0x%08x>>%u=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
-                            reg_nomes[rd], reg[rs1], valor);
+                            reg_nomes[rd], reg[rs1], reg[rs2] & 0x1F, valor);
 
                     if (rd != 0) reg[rd] = valor;
                 }
@@ -192,9 +192,9 @@ int main(int argc, char* argv[]) {
                 else if (funct3 == 0b101 && funct7 == 0b0100000) {
                     uint32_t valor = (uint32_t)(((int32_t) reg[rs1]) >> (reg[rs2] & 0x1F));
 
-                    fprintf(output, "0x%08x:sra    %s,%s,%s     %s=0x%08x>>>u5=0x%08x\n",
+                    fprintf(output, "0x%08x:sra    %s,%s,%s     %s=0x%08x>>>%u=0x%08x\n",
                             pc, reg_nomes[rd], reg_nomes[rs1], reg_nomes[rs2],
-                            reg_nomes[rd], reg[rs1], valor);
+                            reg_nomes[rd], reg[rs1], reg[rs2] & 0x1F, valor);
 
                     if (rd != 0) reg[rd] = valor;
                 }
@@ -550,7 +550,7 @@ int main(int argc, char* argv[]) {
                     }
                     else {
                         fprintf(output, "0x%08x:beq    %s,%s,0x%03x  (0x%08x==0x%08x)=%u->pc=0x%08x\n",
-                            pc, reg_nomes[rs1], reg_nomes[rs2], imm_b,
+                            pc, reg_nomes[rs1], reg_nomes[rs2], imm_b+6,
                             reg[rs1], reg[rs2], reg[rs1] == reg[rs2], pc + 4);
                     }
                 }
@@ -573,7 +573,6 @@ int main(int argc, char* argv[]) {
                 }
                 // operação blt
                 /* Desvia (pc = pc + imm_b) se o conteúdo de rs1 for menor que o de rs2 (comparação com sinal).*/
-                // tem alguma coisa errada
                 else if (funct3 == 0b100) {
                     if ((int32_t)reg[rs1] < (int32_t)reg[rs2]) {
                         fprintf(output, "0x%08x:blt    %s,%s,0x%03x         (0x%08x<0x%08x)=1->pc=0x%08x\n",
