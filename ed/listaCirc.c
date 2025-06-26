@@ -80,7 +80,6 @@ void destruir_lista(No* lista) {
     free(lista);
 }
 
-
 int main() {
     No* lista = criar_lista();
 
